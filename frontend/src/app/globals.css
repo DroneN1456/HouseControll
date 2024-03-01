@@ -1,0 +1,110 @@
+.boxShadow{
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.title{
+  font-size: 25px;
+  font-weight: bold;
+  background: rgb(255,255,255);
+  min-height: 100px;
+}
+.sidebarItem{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  background-color: white;
+  border-radius: 10px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.sidebarItem:hover{
+  background-color: #1f6ce0;
+  color: white;
+}
+
+.sideBarItemActive{
+  background-color: #1f6ce0;
+  color: white;
+}
+
+.sidebarHeader{
+  font-size: 20px;
+  font-weight: 800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+.sidebarHeaderLine{
+  background-color: black;
+  width: 80%;
+  height: 3px;
+  border-radius: 10px;
+}
+.sidebarButton{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: auto;
+  padding: 20px;
+  font-size: 25px;
+  cursor: pointer;
+}
+.profileName{
+  font-size: 32px;
+  font-weight: 900;
+}
+.profileNameHeader{
+  font-size: 16px;
+  font-weight: 900;
+}
+.cellTitle{
+  font-size: 24px;
+  font-weight: 700;
+}
+.cellValue{
+  font-size: 32px;
+  font-weight: 500;
+}
+.outgoingEntry{
+  height: 100px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin: 0;
+  margin-top: 20px!important;
+  border-radius: 10px;
+  width: 100%;
+}
+.outgoingEntryIcon{
+  font-size: 32px;
+}
+.outgoingEntryTitle{
+  font-size: 24px;
+}
+.NegativeValue{
+  color: red;
+  font-weight: 700;
+}
+.PositiveValue{
+  color: green;
+  font-weight: 700;
+}
+.outgoingEntryButton{
+  background-color:#1f6ce0;
+  border-radius: 100px;
+  padding: 0;
+  border: none;
+  font-size: 32px;
+  color: white;
+}
+.finalValue{
+  font-size: 28px;
+  font-weight: 900px;
+  padding: 0;
+}
+.finalValueHeader{
+  font-size: 32px;
+  font-weight: 900;
+  padding: 0;
+  margin: 0;
+}
