@@ -34,6 +34,7 @@ export class OwingService {
     }
 
     async PayOwing(payOwingDTO: PayOwingDTO){
+
         const owing = await this.owingModel.findById(payOwingDTO.OwingId);
         if(owing == null){
             throw new NotFoundException("Deveção não encontrada.")

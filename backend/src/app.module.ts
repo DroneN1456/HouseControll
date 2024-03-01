@@ -9,9 +9,10 @@ import { ExpenseModule } from './expense/expense.module';
 import { OwingController } from './owing/owing.controller';
 import { OwingService } from './owing/owing.service';
 import { OwingModule } from './owing/owing.module';
+import 'dotenv/config'
 
 @Module({
-  imports: [MongooseModule.forRoot("mongodb://localhost/houseControll"), UserModule, ExpenseModule, OwingModule],
+  imports: [MongooseModule.forRoot(process.env.DB_CONNECTION_STRING), UserModule, ExpenseModule, OwingModule],
   controllers: [AppController],
   providers: [AppService],
 })
