@@ -1,4 +1,4 @@
-export default function OutgoingEntry({title, value, type}: {title: string, value: number, type: string}){
+export default function ExpenseEntry({title, value, type}: {title: string, value: number, type: string}){
     const format = new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'})
     let icon = ''
     switch(type){
@@ -15,9 +15,9 @@ export default function OutgoingEntry({title, value, type}: {title: string, valu
             break;
     }
     return (
-        <div className="row outgoingEntry d-flex align-items-center m-0 p-0">
-            <div className={"col-2 outgoingEntryIcon d-flex align-items-center justify-content-center " + (icon)}/>
-            <div className="col-7 outgoingEntryTitle d-flex align-items-center justify-content-center">{title}</div>
+        <div className="row expenseEntry d-flex align-items-center m-0 p-0">
+            <div className={"col-2 expenseEntryIcon d-flex align-items-center justify-content-center " + (icon)}/>
+            <div className="col-7 expenseEntryTitle d-flex align-items-center justify-content-center">{title}</div>
             <div className={"col-3 d-flex align-items-center justify-content-center " + (value < 0 ? "NegativeValue" : "PositiveValue")}>{format.format(value)}</div>
         </div>
     )

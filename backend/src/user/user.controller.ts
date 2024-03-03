@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Headers, Param, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.schema';
 import { CreateUserDTO } from './user.dto';
@@ -13,7 +13,7 @@ export class UserController {
         return this.userService.CreateUser(createUserDTO);
     }
     @Get(':id/expensesThisMonth')
-    async GetTest(@Param() params: any): Promise<User> {
-        return this.userService.GetExpensesThisMonth(params.id);
+    async GetExpensesThisMonth(@Param() params: any, @Headers('token') token): Promise<User> {
+        return this.userService.GetExpensesThisMonth(params.id, token);
     }
 }

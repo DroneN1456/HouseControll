@@ -1,0 +1,6 @@
+House Controll
+TODO:
+-mudar toda o sistema de responsabilidade do backend, nao é pra ter modulo owing acessando banco de usuarios. [ ]
+-tirar a senha quando de qualquer parte do codigo que retorna usuario. [ ]
+-adicionar campo de confirmar senha no registro. [ ]
+-adicionar notificações de erro. [ ]

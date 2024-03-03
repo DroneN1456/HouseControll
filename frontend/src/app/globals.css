@@ -67,7 +67,7 @@
   font-size: 32px;
   font-weight: 500;
 }
-.outgoingEntry{
+.expenseEntry{
   height: 100px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   margin: 0;
@@ -75,11 +75,19 @@
   border-radius: 10px;
   width: 100%;
 }
-.outgoingEntryIcon{
+.expenseEntryIcon{
   font-size: 32px;
 }
-.outgoingEntryTitle{
+.expenseEntryTitle{
   font-size: 24px;
+}
+.expenseEntryButton{
+  background-color:#1f6ce0;
+  border-radius: 100px;
+  padding: 0;
+  border: none;
+  font-size: 32px;
+  color: white;
 }
 .NegativeValue{
   color: red;
@@ -88,14 +96,6 @@
 .PositiveValue{
   color: green;
   font-weight: 700;
-}
-.outgoingEntryButton{
-  background-color:#1f6ce0;
-  border-radius: 100px;
-  padding: 0;
-  border: none;
-  font-size: 32px;
-  color: white;
 }
 .finalValue{
   font-size: 28px;

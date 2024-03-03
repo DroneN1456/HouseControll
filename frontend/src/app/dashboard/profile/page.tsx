@@ -1,7 +1,7 @@
 import localFont from 'next/font/local'
 import ProfileCell from '../components/profile/profileCell'
-const AileronItalic = localFont({src: "../font/Aileron-ThinItalic.otf"})
-const AileronLight = localFont({src: "../font/Aileron-UltraLight.otf"})
+const AileronItalic = localFont({src: "../../font/Aileron-ThinItalic.otf"})
+const AileronLight = localFont({src: "../../font/Aileron-UltraLight.otf"})
 
 export default function Page(){
     const user = {

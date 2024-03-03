@@ -1,15 +1,19 @@
 'use client'
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button, Form, FormLabel, InputGroup, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
-export default function OutgoingModal({addOutCallback}: {addOutCallback: any}){
+export default function ExpenseModal({addOutCallback}: {addOutCallback: any}){
+    const router = useRouter()
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     const {register, handleSubmit, watch} = useForm();
+
+
     const handleValue = (data: any) => {
        let amount = data.amount.replace(',', '.')
        amount = parseFloat(amount);
@@ -26,17 +30,21 @@ export default function OutgoingModal({addOutCallback}: {addOutCallback: any}){
             break;
        }
        const entryObject = {
-        value: amount,
-        title: title,
-        type: data.type
+        Value: amount,
+        Title: title,
+        Type: data.type
        }
-       addOutCallback(entryObject);
+       addOutCallback(entryObject).then(() => {
+        handleClose();
+        router.refresh();
+       })
+
     }
     const entryType = watch('type')
     
     return (
         <div>
-         <Button className={"outgoingEntryButton bi bi-plus-circle-dotted p-0 m-0 col-2"} onClick={handleShow}/>
+         <Button className={"expenseEntryButton bi bi-plus-circle-dotted p-0 m-0 col-2"} onClick={handleShow}/>
          <Modal show={show} onHide={handleClose} centered>
             <Modal.Header>
                 <Modal.Title>Adicionar Movimentação</Modal.Title>

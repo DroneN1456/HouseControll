@@ -9,10 +9,17 @@ import { ExpenseModule } from './expense/expense.module';
 import { OwingController } from './owing/owing.controller';
 import { OwingService } from './owing/owing.service';
 import { OwingModule } from './owing/owing.module';
-import 'dotenv/config'
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [MongooseModule.forRoot(process.env.DB_CONNECTION_STRING), UserModule, ExpenseModule, OwingModule],
+  imports: [
+    ConfigModule.forRoot({isGlobal: true}),
+    MongooseModule.forRoot(process.env.DB_CONNECTION_STRING), 
+    UserModule, 
+    ExpenseModule, 
+    OwingModule, 
+    AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
