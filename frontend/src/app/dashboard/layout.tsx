@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
+import type { GetServerSideProps, GetServerSidePropsContext, Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.min.css'
 import localFont from 'next/font/local'
 import SidebarItem from "./components/sidebarItem";
+import {parseCookies} from 'nookies'
 
 
 export const metadata: Metadata = {

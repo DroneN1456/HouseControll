@@ -4,3 +4,4 @@ TODO:
 -tirar a senha quando de qualquer parte do codigo que retorna usuario. [ ]
 -adicionar campo de confirmar senha no registro. [ ]
 -adicionar notificações de erro. [ ]
+-mudar metodolgia de consumir API, incluir getServerSideProps() em tudo. [ ]

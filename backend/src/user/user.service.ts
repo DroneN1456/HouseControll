@@ -1,66 +1,73 @@
-import { BadRequestException, Inject, Injectable, UnauthorizedException, forwardRef } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  UnauthorizedException,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './user.schema';
-import mongoose, { Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { Expense } from 'src/expense/expense.schema';
 import { CreateUserDTO } from './user.dto';
-import { SignInDto } from 'src/auth/auth.signin.dto';
 import { AuthService } from 'src/auth/auth.service';
-import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class UserService {
-    constructor( 
-        @InjectModel(User.name) private userModel : Model<User>,  
-        @InjectModel(Expense.name) private expenseModel: Model<Expense>,
-        @Inject(forwardRef(() => AuthService)) private AuthService: AuthService
-        ){}
-    
-    async CreateUser(createUserDTO: CreateUserDTO){
-        const existentUser = await this.userModel.findOne({Name: createUserDTO.Name});
+  constructor(
+    @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(Expense.name) private expenseModel: Model<Expense>,
+    @Inject(forwardRef(() => AuthService)) private AuthService: AuthService,
+  ) {}
 
-        if(existentUser != null){
-            throw new BadRequestException("Usuario já existe.");
-        }
-        createUserDTO.Password = bcrypt.hashSync(createUserDTO.Password, process.env.HASH_SALT);
-        const newUser = new this.userModel(createUserDTO);
+  async CreateUser(createUserDTO: CreateUserDTO) {
+    const existentUser = await this.userModel.findOne({
+      Name: createUserDTO.Name,
+    });
 
-        newUser.save();
+    if (existentUser != null) {
+      throw new BadRequestException('Usuario já existe.');
+    }
+    const newUser = new this.userModel(createUserDTO);
 
-        return newUser;
+    newUser.save();
+
+    return newUser;
+  }
+
+  //password will be hashed in later versions
+  async FindUser(Name, Password) {
+    const user = await this.userModel.findOne({
+      Name: Name,
+      Password: Password,
+    });
+    if (user == null) {
+      throw new BadRequestException('Usuário não encontrado.');
+    }
+    return {
+      Name: user.Name,
+      UserId: user.id,
+    };
+  }
+
+  //JWT validation later :)
+  async GetExpensesThisMonth(userId: string, token: string): Promise<any> {
+    const User = await this.userModel.findById(userId);
+    if (User == null) {
+      throw new BadRequestException('Usuário não encontrado.');
+    }
+    const payload = await this.AuthService.ValidateUser({ token: token });
+    if (payload.UserId != userId) {
+      throw new UnauthorizedException('Usuário não autorizado.');
     }
 
-    //password will be hashed in later versions
-    async FindUser(Name, Password){
-        const user = await this.userModel.findOne({Name: Name, Password: Password});
-        if(user == null){
-            throw new BadRequestException("Usuário não encontrado.");
-        }
-        return {
-            Name: user.Name,
-            UserId: user.id
-        }
+    let expensesThisMonth = 0;
+
+    for (const expense of User.Expenses) {
+      const _expense = await this.expenseModel.findById(expense);
+      expensesThisMonth += _expense.Value;
     }
 
-    //JWT validation later :)
-    async GetExpensesThisMonth(userId: string, token: string): Promise<any>{
-        const User = await this.userModel.findById(userId);
-        if(User == null){
-            throw new BadRequestException("Usuário não encontrado.")
-        }
-        const payload = await this.AuthService.ValidateUser({token: token});
-        if(payload.UserId != userId){
-            throw new UnauthorizedException("Usuário não autorizado.")
-        }
-
-
-        let expensesThisMonth = 0;
-
-        for(const expense of User.Expenses){
-            const _expense = await this.expenseModel.findById(expense);
-            expensesThisMonth += _expense.Value;
-        }
-
-        return expensesThisMonth;
-    }
+    return expensesThisMonth;
+  }
 }

@@ -3,7 +3,7 @@ import RegisterContainer from "./components/RegisterContainer";
 export default function Page(){
     async function HandleRegister(data: any){
         'use server'
-        const res = await fetch(`${process.env.API_URL}/user`, {
+        const res = await fetch(`${process.env.API_URL}/auth/signup`, {
             next: {
                 revalidate: 0,
             },
@@ -13,6 +13,7 @@ export default function Page(){
             body: JSON.stringify(data),
             method: 'POST'
         })
+        console.log(process.env.API_URL)
         return res.status;
 
     }
