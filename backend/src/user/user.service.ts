@@ -6,6 +6,7 @@ import { Expense } from 'src/expense/expense.schema';
 import { CreateUserDTO } from './user.dto';
 import { SignInDto } from 'src/auth/auth.signin.dto';
 import { AuthService } from 'src/auth/auth.service';
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class UserService {
@@ -21,7 +22,7 @@ export class UserService {
         if(existentUser != null){
             throw new BadRequestException("Usuario já existe.");
         }
-
+        createUserDTO.Password = bcrypt.hashSync(createUserDTO.Password, process.env.HASH_SALT);
         const newUser = new this.userModel(createUserDTO);
 
         newUser.save();

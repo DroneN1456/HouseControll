@@ -15,7 +15,7 @@ export default async function Page(){
         },
         headers: {
             'Content-Type': 'application/json',
-            'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiR3VzdGF2byBBcmF1am8iLCJVc2VySWQiOiI2NWU0Yzk3MjkzY2VmODY5M2UzNTU5NjQiLCJpYXQiOjE3MDk1MDM0MDQsImV4cCI6MTcwOTUwNzAwNH0.-KUn9N4WIuXuJW9T01WRdzh5TfXe4BzcCluYNQTw9z0'
+            'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiU2FtdWVsIiwiVXNlcklkIjoiNjVlNTEyM2JkN2M1YTc4MzQ1YzA0Y2NhIiwiaWF0IjoxNzA5NTExMjYzLCJleHAiOjE3MDk1MTQ4NjN9.LvM5fQOhNCztlzI6FknRc4OEUI6FrVXo7Y-z8eFUFVg'
         }, 
     });
     const data = await res.json();
@@ -34,7 +34,7 @@ export default async function Page(){
             },
             headers: {
                 'Content-Type': 'application/json',
-                'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiR3VzdGF2byBBcmF1am8iLCJVc2VySWQiOiI2NWU0Yzk3MjkzY2VmODY5M2UzNTU5NjQiLCJpYXQiOjE3MDk1MDM0MDQsImV4cCI6MTcwOTUwNzAwNH0.-KUn9N4WIuXuJW9T01WRdzh5TfXe4BzcCluYNQTw9z0'
+                'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiU2FtdWVsIiwiVXNlcklkIjoiNjVlNTEyM2JkN2M1YTc4MzQ1YzA0Y2NhIiwiaWF0IjoxNzA5NTExMjYzLCJleHAiOjE3MDk1MTQ4NjN9.LvM5fQOhNCztlzI6FknRc4OEUI6FrVXo7Y-z8eFUFVg'
             },
             body: JSON.stringify(entryObject), 
             method: 'POST'
