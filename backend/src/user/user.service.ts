@@ -11,6 +11,7 @@ import { Model } from 'mongoose';
 import { Expense } from 'src/expense/expense.schema';
 import { CreateUserDTO } from './user.dto';
 import { AuthService } from 'src/auth/auth.service';
+import { OwingService } from 'src/owing/owing.service';
 
 @Injectable()
 export class UserService {
@@ -18,6 +19,7 @@ export class UserService {
     @InjectModel(User.name) private userModel: Model<User>,
     @InjectModel(Expense.name) private expenseModel: Model<Expense>,
     @Inject(forwardRef(() => AuthService)) private AuthService: AuthService,
+    private owingService: OwingService,
   ) {}
 
   async CreateUser(createUserDTO: CreateUserDTO) {
@@ -35,7 +37,6 @@ export class UserService {
     return newUser;
   }
 
-  //password will be hashed in later versions
   async FindUser(Name, Password) {
     const user = await this.userModel.findOne({
       Name: Name,
@@ -50,7 +51,41 @@ export class UserService {
     };
   }
 
-  //JWT validation later :)
+  async GetProfile(token: string) {
+    const payload = await this.AuthService.ValidateUser({ token: token });
+    const user = await this.userModel.findById(payload.UserId);
+    if (user == null) {
+      throw new BadRequestException('Usuário não encontrado.');
+    }
+
+    let expensesThisMonth = 0;
+    let gainsThisMonth = 0;
+
+    for (const expense of user.Expenses) {
+      const _expense = await this.expenseModel.findById(expense);
+      if (_expense.Value > 0) {
+        gainsThisMonth += _expense.Value;
+      } else {
+        expensesThisMonth += _expense.Value;
+      }
+    }
+    const balanceForecast = expensesThisMonth + gainsThisMonth;
+
+    const activeOwings = await this.owingService.FindActiveOwings(
+      payload.UserId,
+    );
+    let owing = 0;
+    for (const activeOwing of activeOwings) {
+      owing += activeOwing.Value;
+    }
+    return {
+      Name: user.Name,
+      Owing: owing,
+      BalanceForecast: balanceForecast,
+      ExpensesThisMonth: expensesThisMonth,
+    };
+  }
+
   async GetExpensesThisMonth(userId: string, token: string): Promise<any> {
     const User = await this.userModel.findById(userId);
     if (User == null) {
@@ -69,5 +104,16 @@ export class UserService {
     }
 
     return expensesThisMonth;
+  }
+  async GetAllExceptMe(token: string) {
+    const payload = await this.AuthService.ValidateUser({ token: token });
+    const users = await this.userModel.find({
+      _id: { $ne: payload.UserId },
+    });
+    const usersNoPassword = users.map((user: any) => {
+      user.Password = '';
+      return user;
+    });
+    return usersNoPassword;
   }
 }

@@ -1,5 +1,4 @@
-export class CreateOwingDTO{
-    Debtor: string;
-    Creditor: string;
-    Value: number;
+export class CreateOwingDTO {
+  Creditor: string;
+  Value: number;
 }

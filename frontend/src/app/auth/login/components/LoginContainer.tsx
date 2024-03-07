@@ -6,12 +6,14 @@ import localFont from 'next/font/local'
 import Link from "next/link"
 import { useForm } from "react-hook-form"
 import {setCookie} from "nookies"
+import { useRouter } from "next/navigation"
 
 const AileronItalic = localFont({src: "../../../font/Aileron-ThinItalic.otf"})
 
 export default function LoginContainer({loginCallback}: {loginCallback: any}){
 
     const {register, handleSubmit} = useForm();
+    const router = useRouter();
 
     async function handleLogin(data: any){
         const res = await loginCallback(data)
@@ -23,6 +25,7 @@ export default function LoginContainer({loginCallback}: {loginCallback: any}){
             maxAge: 60 * 60,
             path: '/'
         });
+        router.push('/dashboard/profile')
     }
 
     return (

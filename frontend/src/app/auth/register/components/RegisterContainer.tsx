@@ -20,7 +20,6 @@ export default function RegisterContainer({RegisterCallback}: {RegisterCallback:
             return;
         }
         const status = await RegisterCallback(data);
-        console.log(status)
         if(status != 201){
             alert('Algo deu errado.')
         }else{

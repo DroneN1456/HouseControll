@@ -1,4 +1,4 @@
-export class PayOwingDTO{
-    OwingId: string;
-    Value: number;
+export class PayOwingDTO {
+  OwingId: string;
+  Value: number;
 }

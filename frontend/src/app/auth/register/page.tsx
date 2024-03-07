@@ -1,5 +1,9 @@
+import Head from "next/head";
 import RegisterContainer from "./components/RegisterContainer";
-
+import { Metadata } from "next";
+export const metadata: Metadata = {
+    title: "House Controll - Registro",
+  };
 export default function Page(){
     async function HandleRegister(data: any){
         'use server'
@@ -13,12 +17,14 @@ export default function Page(){
             body: JSON.stringify(data),
             method: 'POST'
         })
-        console.log(process.env.API_URL)
         return res.status;
 
     }
     return (
         <div className="container-fluid d-flex justify-content-center align-items-center" style={{height: '100vh'}}>
+            <Head>
+                <title>Login</title>
+            </Head>
             <div>
                 <RegisterContainer RegisterCallback={HandleRegister}/>
             </div>

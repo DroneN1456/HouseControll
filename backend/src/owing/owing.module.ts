@@ -9,13 +9,14 @@ import { ExpenseService } from 'src/expense/expense.service';
 import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-    imports: [
-        MongooseModule.forFeature([{name: Owing.name, schema: OwingSchema}]),
-        MongooseModule.forFeature([{name: User.name, schema: UserSchema}]),
-        MongooseModule.forFeature([{name: Expense.name, schema: ExpenseSchema}]),
-        AuthModule
-    ],
-    controllers: [OwingController],
-    providers: [OwingService, ExpenseService]
+  imports: [
+    MongooseModule.forFeature([{ name: Owing.name, schema: OwingSchema }]),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: Expense.name, schema: ExpenseSchema }]),
+    AuthModule,
+  ],
+  controllers: [OwingController],
+  providers: [OwingService, ExpenseService],
+  exports: [OwingService],
 })
 export class OwingModule {}

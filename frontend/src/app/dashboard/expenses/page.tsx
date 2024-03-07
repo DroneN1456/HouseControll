@@ -1,32 +1,52 @@
 import ExpenseEntry from "../components/expenses/expenseEntry";
 import localFont from 'next/font/local'
 import ExpenseModal from "../components/expenses/expenseModal";
+import { cookies } from "next/headers";
+import { Metadata } from "next";
 
 const AileronItalic = localFont({src: "../../font/Aileron-ThinItalic.otf"})
 const AileronLight = localFont({src: "../../font/Aileron-UltraLight.otf"})
 
-
-export default async function Page(){
-
-
+export const metadata: Metadata = {
+    title: "House Controll - Despesas",
+  };
+  
+async function GetExpenses(){
+    const token = cookies().get('token');
     const res = await fetch(`${process.env.API_URL}/expense`,{
         next: {
             revalidate: 0
         },
         headers: {
-            'Content-Type': 'application/json',
-            'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiU2FtdWVsIiwiVXNlcklkIjoiNjVlNTEyM2JkN2M1YTc4MzQ1YzA0Y2NhIiwiaWF0IjoxNzA5NTExMjYzLCJleHAiOjE3MDk1MTQ4NjN9.LvM5fQOhNCztlzI6FknRc4OEUI6FrVXo7Y-z8eFUFVg'
+            token: token?.value ?? '' 
         }, 
     });
     const data = await res.json();
+    return data;
+}
+async function GetExpensesAllTime(){
+    const res = await fetch(`${process.env.API_URL}/expense/expensesAllTime`,{
+        next:{
+            revalidate: 0
+        },
+        headers: {
+            token: cookies().get('token')?.value ?? ''
+        }
+    })
+    const data = await res.json();
+    return data.ExpensesAllTime;
+}
+export default async function Page(){
+    const expenses = await GetExpenses();
 
-    let finalValue = 0;
+    const expensesAllTime = await GetExpensesAllTime();
 
     const format = new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'})
 
 
     const modalCallback = async function(entryObject: any){
         'use server'
+        const token = cookies().get('token');
         let statusCode = 0;
         return fetch(`${process.env.API_URL}/expense`,{
             next: {
@@ -34,7 +54,7 @@ export default async function Page(){
             },
             headers: {
                 'Content-Type': 'application/json',
-                'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiU2FtdWVsIiwiVXNlcklkIjoiNjVlNTEyM2JkN2M1YTc4MzQ1YzA0Y2NhIiwiaWF0IjoxNzA5NTExMjYzLCJleHAiOjE3MDk1MTQ4NjN9.LvM5fQOhNCztlzI6FknRc4OEUI6FrVXo7Y-z8eFUFVg'
+                token: token?.value ?? ''
             },
             body: JSON.stringify(entryObject), 
             method: 'POST'
@@ -46,13 +66,13 @@ export default async function Page(){
         <div className="d-flex flex-column justify-content-center m-0 p-0">
             <div className="row m-0 p-0">
                 <div className={AileronLight.className + " col-10 finalValueHeader"}>Saldo Final: </div>
-                <div className={"col-2 finalValue " + (finalValue < 0 ? "NegativeValue " : "PositiveValue ") + (AileronItalic.className)}>{format.format(finalValue)}</div>
+                <div className={"col-2 finalValue " + (expensesAllTime < 0 ? "NegativeValue " : "PositiveValue ") + (AileronItalic.className)}>{format.format(expensesAllTime)}</div>
             </div>
-            <div className="row p-0 m-0">
+            <div className="row m-0 p-0 d-flex flex-column justify-content-center align-items-center px-2">
                 <ExpenseModal addOutCallback={modalCallback}/>
             </div>
-            <div className="d-flex flex-column justify-content-center align-items-center m-0 p-0">
-                {data.reverse().map((x: any) => {
+            <div className="d-flex flex-column justify-content-center align-items-center m-0 px-2">
+                {expenses.reverse().map((x: any) => {
                     return (<ExpenseEntry title={x.Title} value={x.Value} type={x.Type} key={x._id}/>)
                 })}
             </div>

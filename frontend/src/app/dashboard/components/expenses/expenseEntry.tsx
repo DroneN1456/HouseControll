@@ -15,9 +15,9 @@ export default function ExpenseEntry({title, value, type}: {title: string, value
             break;
     }
     return (
-        <div className="row expenseEntry d-flex align-items-center m-0 p-0">
-            <div className={"col-2 expenseEntryIcon d-flex align-items-center justify-content-center " + (icon)}/>
-            <div className="col-7 expenseEntryTitle d-flex align-items-center justify-content-center">{title}</div>
+        <div className="row expenseEntry d-flex align-items-center m-0 p-0 mt-3">
+            <div className={"col-3 expenseEntryIcon d-flex align-items-center justify-content-center " + (icon)}/>
+            <div className="col-6 expenseEntryTitle d-flex align-items-center justify-content-center">{title}</div>
             <div className={"col-3 d-flex align-items-center justify-content-center " + (value < 0 ? "NegativeValue" : "PositiveValue")}>{format.format(value)}</div>
         </div>
     )

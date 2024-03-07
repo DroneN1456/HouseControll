@@ -86,8 +86,9 @@
   border-radius: 100px;
   padding: 0;
   border: none;
-  font-size: 32px;
+  font-size: 64px;
   color: white;
+  height: 100px;
 }
 .NegativeValue{
   color: red;
@@ -107,4 +108,42 @@
   font-weight: 900;
   padding: 0;
   margin: 0;
+}
+.owingRowData{
+  font-size: 32px;
+  font-weight: 900;
+  height: 100px;
+  vertical-align: middle;
+}
+.owingRowValue{
+  color: green!important;
+}
+.owingRowPay{
+  width: 100%;
+  vertical-align: middle;
+  display: flex;
+  height: 70px;
+  border-radius: 10px!important;
+  background-color: greenyellow!important;
+}
+.owingRowStatus{
+  font-size: 20px;
+  vertical-align: middle;
+  border-radius: 20px!important;
+  display: inline-block;
+  width: 110px;
+  text-align: center;
+}
+.owingRowStatusPaid{
+  background-color: green;
+  color: white;
+}
+.owingRowStatusPending{
+  background-color: yellow;
+  color: black;
+}
+.owingCreate{
+  background-color: #1f6ce0!important;
+  color: white!important;
+  font-size: 20px!important;
 }

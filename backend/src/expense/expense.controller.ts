@@ -4,15 +4,22 @@ import { ExpenseService } from './expense.service';
 
 @Controller('expense')
 export class ExpenseController {
-    constructor(private expenseService: ExpenseService){}
+  constructor(private expenseService: ExpenseService) {}
 
-    @Post()
-    async CreateExpense(@Body() createExpenseDTO: CreateExpenseDTO, @Headers('token') token){
-        return this.expenseService.CreateExpense(createExpenseDTO, token);
-    }
+  @Post()
+  async CreateExpense(
+    @Body() createExpenseDTO: CreateExpenseDTO,
+    @Headers('token') token,
+  ) {
+    return this.expenseService.CreateExpense(createExpenseDTO, token);
+  }
 
-    @Get()
-    async GetExpenses(@Headers('token') token){
-        return this.expenseService.GetExpenses(token);
-    }
+  @Get()
+  async GetExpenses(@Headers('token') token) {
+    return this.expenseService.GetExpenses(token);
+  }
+  @Get('expensesAllTime')
+  async GetExpensesAllTime(@Headers('token') token) {
+    return this.expenseService.GetExpensesAllTime(token);
+  }
 }

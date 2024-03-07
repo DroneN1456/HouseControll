@@ -1,5 +1,10 @@
+import Head from "next/head";
 import LoginContainer from "./components/LoginContainer";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+    title: "House Controll - Entrar",
+  };
 export default function Page(){
     async function HandleLogin(data: any){
         'use server'

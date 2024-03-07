@@ -43,8 +43,8 @@ export default function ExpenseModal({addOutCallback}: {addOutCallback: any}){
     const entryType = watch('type')
     
     return (
-        <div>
-         <Button className={"expenseEntryButton bi bi-plus-circle-dotted p-0 m-0 col-2"} onClick={handleShow}/>
+        <div className="p-0 m-0">
+         <Button className={"expenseEntryButton bi bi-plus-circle-dotted p-0 m-0 col-12"} onClick={handleShow}/>
          <Modal show={show} onHide={handleClose} centered>
             <Modal.Header>
                 <Modal.Title>Adicionar Movimentação</Modal.Title>
