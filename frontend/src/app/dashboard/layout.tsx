@@ -6,6 +6,7 @@ import 'bootstrap-icons/font/bootstrap-icons.min.css'
 import localFont from 'next/font/local'
 import SidebarItem from "./components/sidebarItem";
 import {parseCookies} from 'nookies'
+import MobileSidebar from "./components/mobileSidebar";
 
 
 export const metadata: Metadata = {
@@ -24,18 +25,19 @@ export default function RootLayout({
   return (
     <html>
       <body>
-    <main className={" container-fluid d-flex flex-row row"} style={{height: '100vh', padding: "0", margin: "0"}}>
-      <div className="col-2 sidebar p-0 d-flex flex-column">
+    <main className={"container-fluid d-flex flex-row row p-0 m-0"} style={{height: '100vh'}}>
+      <MobileSidebar/>
+      <div className="col-2 sidebar p-0 d-flex flex-column d-none d-md-block">
         <div className={AileronLight.className + " sidebarHeader"}>Bem-Vindo</div>
         <div className="d-flex justify-content-center align-items-center">
           <div className="sidebarHeaderLine col-10" />
         </div>
         <SidebarItem title="Perfil" url="/profile"/>
-        <SidebarItem title="Gastos Pessoais" url="/expenses"/>
-        <SidebarItem title="Deveçoes" url="/owing" />
+        <SidebarItem title="Movimentações" url="/expenses"/>
+        <SidebarItem title="Dívidas" url="/owing" />
       </div>
-      <div className="d-flex flex-column col-10" style={{height: '100vh', padding: "0", margin: "0"}}>
-        <div className={AileronItalic.className + " d-flex align-items-center justify-content-center title"} style={{height: '100px'}}>
+      <div className="d-flex flex-column col-12 col-md-10 container-fluid p-3" style={{height: '100vh', padding: "0", margin: "0"}}>
+        <div className={AileronItalic.className + " d-flex align-items-center justify-content-center title w-100"} style={{height: '100px'}}>
           House Controll
         </div>
         <div className="">

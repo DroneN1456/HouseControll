@@ -31,10 +31,10 @@ export default function ExpenseEntry({expense, DeleteCallback}: {expense: any, D
     }
     return (
         <div className="row expenseEntry d-flex align-items-center m-0 p-0 mt-3">
-            <div className={"col-2 expenseEntryIcon d-flex align-items-center justify-content-center " + (icon)}/>
-            <div className="col-7 expenseEntryTitle d-flex align-items-center justify-content-center">{expense.Title}</div>
-            <div className={"col-2 d-flex align-items-center justify-content-center " + (expense.Value < 0 ? "NegativeValue" : "PositiveValue")}>{format.format(expense.Value)}</div>
-            <div className="col-1">
+            <div className={"col-2 col-md-3 expenseEntryIcon d-flex align-items-center justify-content-center p-1 m-0" + (icon)}/>
+            <div className="col-3 col-md-3 expenseEntryTitle d-flex align-items-center justify-content-center p-1 m-0">{expense.Title}</div>
+            <div className={"col-4 col-md-4 d-flex align-items-center justify-content-center p-1 m-0 " + (expense.Value < 0 ? "NegativeValue" : "PositiveValue")}>{format.format(expense.Value)}</div>
+            <div className="col-3 col-md-2 p-1 m-0">
                 <button className="btn btn-danger entryDelete" onClick={HandleDelete}><i className="bi bi-trash"></i></button>
             </div>
         </div>

@@ -70,7 +70,7 @@ export default async function Page(){
                         <th scope="col">Devedor</th>
                         <th scope="col">Credor</th>
                         <th scope="col">Valor</th>
-                        <th scope="col" className="">Status</th>
+                        <th scope="col" className=""><span className="d-none d-md-block">Status</span></th>
                         <th scope="col"></th>
                     </tr>
                 </thead>

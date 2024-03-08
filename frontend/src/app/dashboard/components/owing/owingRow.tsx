@@ -33,7 +33,7 @@ export default function OwingRow({owing} : {owing: any}){
             <td className={AileronLight.className + " owingRowData"}>{owing.Creditor}</td>
             <td className={AileronLight.className + " owingRowData owingRowValue"}>{formater.format(owing.Status == 1 ? owing.Value : owing.PendingValue)}</td>
             <td className={AileronLight.className + " owingRowData"}>
-                <div className={"owingRowStatus p-1 " + (owing.Status == 1 ? "owingRowStatusPaid" : "owingRowStatusPending")}>{statusText}</div>
+                <div className={"owingRowStatus p-1 " + (owing.Status == 1 ? "owingRowStatusPaid" : "owingRowStatusPending")}><span className="d-none d-md-block">{statusText}</span></div>
             </td>
             <OwingModal owing={owing} PaymentCallback={HandlePayment}/>
         </tr>

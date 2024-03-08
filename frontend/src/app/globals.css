@@ -18,6 +18,11 @@
   cursor: pointer;
 }
 
+.sidebarButton{
+  position: absolute;
+  top: 46px;
+}
+
 .sidebarItem:hover{
   background-color: #1f6ce0;
   color: white;
@@ -79,7 +84,7 @@
   font-size: 32px;
 }
 .expenseEntryTitle{
-  font-size: 24px;
+  font-size: 18px;
 }
 .expenseEntryButton{
   background-color:#1f6ce0;
@@ -103,13 +108,13 @@
   padding: 0;
 }
 .finalValueHeader{
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 900;
   padding: 0;
   margin: 0;
 }
 .owingRowData{
-  font-size: 32px;
+  font-size: 18px;
   font-weight: 900;
   height: 100px;
   vertical-align: middle;
@@ -120,17 +125,16 @@
 .owingRowPay{
   width: 100%;
   vertical-align: middle;
-  height: 70px;
   font-size: 20px!important;
   border-radius: 10px!important;
   background-color: greenyellow!important;
 }
 .owingRowStatus{
-  font-size: 20px;
+  font-size: 16px;
   vertical-align: middle;
   border-radius: 20px!important;
   display: inline-block;
-  width: 110px;
+  width: 10px;
   text-align: center;
 }
 .owingRowStatusPaid{
@@ -145,4 +149,15 @@
   background-color: #1f6ce0!important;
   color: white!important;
   font-size: 20px!important;
+}
+@media(min-width: 768px){
+  .owingRowData{
+    font-size: 32px;
+  }
+  .expenseEntryTitle {
+    font-size: 24px;
+  }
+  .owingRowPay{
+    height: 70px;
+  }
 }

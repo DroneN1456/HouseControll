@@ -79,8 +79,8 @@ export default async function Page(){
     return (
         <div className="d-flex flex-column justify-content-center m-0 p-0">
             <div className="row m-0 p-0">
-                <div className={AileronLight.className + " col-10 finalValueHeader"}>Saldo Final: </div>
-                <div className={"col-2 finalValue " + (expensesAllTime < 0 ? "NegativeValue " : "PositiveValue ") + (AileronItalic.className)}>{format.format(expensesAllTime)}</div>
+                <div className={AileronLight.className + " col-6 col-md-8 finalValueHeader"}>Saldo Final: </div>
+                <div className={"col-6 col-md-4 finalValue " + (expensesAllTime < 0 ? "NegativeValue " : "PositiveValue ") + (AileronItalic.className)}>{format.format(expensesAllTime)}</div>
             </div>
             <div className="row m-0 p-0 d-flex flex-column justify-content-center align-items-center px-2">
                 <ExpenseModal addOutCallback={modalCallback}/>
