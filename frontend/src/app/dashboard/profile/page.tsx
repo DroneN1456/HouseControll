@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 async function GetProfile(){
     const token = cookies().get('token');
-    const res = await fetch(process.env.API_URL + '/user/profile', {
+    const res = await fetch(`${process.env.API_URL}/user/profile`, {
         next:{
             revalidate: 0
         },
