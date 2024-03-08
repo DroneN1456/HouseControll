@@ -9,8 +9,9 @@ export async function middleware(request: NextRequest){
     if(!token){
         return NextResponse.redirect(url)
     }
-    console.log(`${process.env.NEXT_PUBLIC_API_URL}/auth/validate`)
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/validate`, {
+    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/auth/validate`;
+    console.log(apiUrl)
+    const res = await fetch(apiUrl, {
         next: {
             revalidate: 0
         },
