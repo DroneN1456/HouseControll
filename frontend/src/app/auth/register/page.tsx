@@ -17,6 +17,8 @@ export default function Page(){
             body: JSON.stringify(data),
             method: 'POST'
         })
+        console.log(res)
+        console.log(process.env.API_URL)
         return res.status;
 
     }
