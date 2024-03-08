@@ -44,7 +44,7 @@ export default function OwingModal({owing, PaymentCallback}: {owing: any, Paymen
                 </Modal.Footer>
                 </Form>
             </Modal>
-            {owing.Status == 0 && <td className="owingRowData"><button className="btn owingRowPay" onClick={HandleShow}><i className="bi bi-wallet2"></i></button></td>}
+            <td className="owingRowData">{owing.Status == 0 && <button className="btn owingRowPay" onClick={HandleShow}><i className="bi bi-wallet2"></i></button>}</td>
         </>
     )
 }

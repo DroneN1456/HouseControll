@@ -72,7 +72,7 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   margin: 0;
   margin-top: 20px!important;
-  border-radius: 10px;
+  border-radius: 10px!important;
   width: 100%;
 }
 .expenseEntryIcon{
@@ -83,10 +83,9 @@
 }
 .expenseEntryButton{
   background-color:#1f6ce0;
-  border-radius: 100px;
   padding: 0;
   border: none;
-  font-size: 64px;
+  font-size: 32px;
   color: white;
   height: 100px;
 }
@@ -121,8 +120,8 @@
 .owingRowPay{
   width: 100%;
   vertical-align: middle;
-  display: flex;
   height: 70px;
+  font-size: 20px!important;
   border-radius: 10px!important;
   background-color: greenyellow!important;
 }
