@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function Page(){
     async function HandleLogin(data: any){
         'use server'
-        const res = await fetch(`${process.env.API_URL}/auth/signin`,{
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signin`,{
             next:{
             revalidate: 0
             },

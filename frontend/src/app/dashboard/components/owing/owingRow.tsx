@@ -8,7 +8,7 @@ export default function OwingRow({owing} : {owing: any}){
 
     async function HandlePayment(data: any){
         'use server'
-        const res = await fetch(`${process.env.API_URL}/owing/payOwing`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/owing/payOwing`, {
             next: {
                 revalidate: 0
             },

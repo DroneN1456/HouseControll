@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 async function GetExpenses(){
     const token = cookies().get('token');
-    const res = await fetch(`${process.env.API_URL}/expense`,{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/expense`,{
         next: {
             revalidate: 0
         },
@@ -25,7 +25,7 @@ async function GetExpenses(){
     return data;
 }
 async function GetExpensesAllTime(){
-    const res = await fetch(`${process.env.API_URL}/expense/expensesAllTime`,{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/expense/expensesAllTime`,{
         next:{
             revalidate: 0
         },
@@ -38,7 +38,7 @@ async function GetExpensesAllTime(){
 }
 async function DeleteExpense(expenseId: any){
     'use server'
-    const res = await fetch(`${process.env.API_URL}/expense/${expenseId}`,{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/expense/${expenseId}`,{
         next:{
             revalidate: 0
         },
@@ -62,7 +62,7 @@ export default async function Page(){
         'use server'
         const token = cookies().get('token');
         let statusCode = 0;
-        return fetch(`${process.env.API_URL}/expense`,{
+        return fetch(`${process.env.NEXT_PUBLIC_API_URL}/expense`,{
             next: {
                 revalidate: 0
             },

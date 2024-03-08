@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 async function GetOwings(){
     const token = cookies().get("token");
-    const res = await fetch(`${process.env.API_URL}/owing`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/owing`, {
         next: {
             revalidate: 0
         },
@@ -25,7 +25,7 @@ async function GetOwings(){
 
 async function GetCreditors(){
     const token = cookies().get("token");
-    const res = await fetch(`${process.env.API_URL}/user/allExceptMe`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/allExceptMe`, {
         next: {
             revalidate: 0
         },
@@ -41,7 +41,7 @@ async function GetCreditors(){
 
 async function HandleCreate(data: any){
     'use server'
-    const res = await fetch(`${process.env.API_URL}/owing`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/owing`, {
         next: {
             revalidate: 0
         },
