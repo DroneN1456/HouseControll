@@ -31,7 +31,7 @@ export class ExpenseService {
     newExpense.Value = createExpenseDTO.Value;
     newExpense.Type = createExpenseDTO.Type;
 
-    if (newExpense.Type == 'misc') {
+    if (newExpense.Title) {
       newExpense.Title = createExpenseDTO.Title;
     } else {
       newExpense.Title = this.TypeTitle[createExpenseDTO.Type];
@@ -54,7 +54,7 @@ export class ExpenseService {
     newExpense.Value = createExpenseDTO.Value;
     newExpense.Type = createExpenseDTO.Type;
 
-    if (newExpense.Type == 'misc') {
+    if (newExpense.Title) {
       newExpense.Title = createExpenseDTO.Title;
     } else {
       newExpense.Title = this.TypeTitle[createExpenseDTO.Type];

@@ -59,11 +59,11 @@ export class OwingService {
     }
 
     this.expenseService.CreateExpense(
-      new CreateExpenseDTO(-payOwingDTO.Value, 'owing'),
+      new CreateExpenseDTO(-payOwingDTO.Value, 'owing', Creditor.Name),
       token,
     );
     this.expenseService.CreateExpenseById(
-      new CreateExpenseDTO(payOwingDTO.Value, 'owing'),
+      new CreateExpenseDTO(payOwingDTO.Value, 'owing', Debtor.Name),
       Creditor.id,
     );
 

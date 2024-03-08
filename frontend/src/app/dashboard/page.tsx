@@ -2,7 +2,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-export default function Home({children}: {children: any}) {
+export default function Page() {
   return (
     <main className="container-fluid d-flex flex-row row" style={{height: '100vh', padding: "0", margin: "0"}}>
       <div className="col-2">
@@ -13,7 +13,6 @@ export default function Home({children}: {children: any}) {
           header
         </div>
         <div className={styles.page}>
-          {children}
         </div>
       </div>
     </main>
