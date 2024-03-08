@@ -69,15 +69,15 @@ export class UserService {
         expensesThisMonth += _expense.Value;
       }
     }
-    const balanceForecast = expensesThisMonth + gainsThisMonth;
 
     const activeOwings = await this.owingService.FindActiveOwings(
       payload.UserId,
     );
     let owing = 0;
     for (const activeOwing of activeOwings) {
-      owing += activeOwing.Value;
+      owing += activeOwing.PendingValue;
     }
+    const balanceForecast = expensesThisMonth + gainsThisMonth - owing;
     return {
       Name: user.Name,
       Owing: owing,

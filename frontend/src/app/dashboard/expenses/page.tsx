@@ -10,7 +10,7 @@ const AileronLight = localFont({src: "../../font/Aileron-UltraLight.otf"})
 export const metadata: Metadata = {
     title: "House Controll - Despesas",
   };
-  
+
 async function GetExpenses(){
     const token = cookies().get('token');
     const res = await fetch(`${process.env.API_URL}/expense`,{
@@ -35,6 +35,20 @@ async function GetExpensesAllTime(){
     })
     const data = await res.json();
     return data.ExpensesAllTime;
+}
+async function DeleteExpense(expenseId: any){
+    'use server'
+    const res = await fetch(`${process.env.API_URL}/expense/${expenseId}`,{
+        next:{
+            revalidate: 0
+        },
+        headers: {
+            token: cookies().get('token')?.value ?? ''
+        },
+        method: 'DELETE'
+    })
+    return res.status;
+
 }
 export default async function Page(){
     const expenses = await GetExpenses();
@@ -72,8 +86,8 @@ export default async function Page(){
                 <ExpenseModal addOutCallback={modalCallback}/>
             </div>
             <div className="d-flex flex-column justify-content-center align-items-center m-0 px-2">
-                {expenses.reverse().map((x: any) => {
-                    return (<ExpenseEntry title={x.Title} value={x.Value} type={x.Type} key={x._id}/>)
+                {expenses.reverse().map((expense: any) => {
+                    return (<ExpenseEntry expense={expense} DeleteCallback={DeleteExpense} key={expense._id}/>)
                 })}
             </div>
         </div>

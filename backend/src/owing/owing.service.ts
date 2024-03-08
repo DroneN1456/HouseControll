@@ -34,6 +34,7 @@ export class OwingService {
     newOwing.Debtor = Debtor;
     newOwing.Creditor = Creditor;
     newOwing.Value = createOwingDTO.Value;
+    newOwing.PendingValue = createOwingDTO.Value;
     newOwing.Status = 0;
 
     newOwing.save();
@@ -58,19 +59,19 @@ export class OwingService {
     }
 
     this.expenseService.CreateExpense(
-      new CreateExpenseDTO(-payOwingDTO.Value, 'payment'),
+      new CreateExpenseDTO(-payOwingDTO.Value, 'owing'),
       token,
     );
     this.expenseService.CreateExpenseById(
-      new CreateExpenseDTO(payOwingDTO.Value, 'payment'),
+      new CreateExpenseDTO(payOwingDTO.Value, 'owing'),
       Creditor.id,
     );
 
-    owing.Value -= payOwingDTO.Value;
-    owing.Value = Math.round(owing.Value * 100) / 100;
+    owing.PendingValue -= payOwingDTO.Value;
+    owing.PendingValue = Math.round(owing.PendingValue * 100) / 100;
 
-    if (owing.Value <= 0.01) {
-      owing.Value = 0;
+    if (owing.PendingValue <= 0.01) {
+      owing.PendingValue = 0;
       owing.Status = 1;
     }
 

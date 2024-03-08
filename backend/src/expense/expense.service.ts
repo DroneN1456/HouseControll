@@ -21,6 +21,7 @@ export class ExpenseService {
   TypeTitle = {
     market: 'Mercado',
     payment: 'Pagamento',
+    owing: 'Dívida',
   };
 
   async CreateExpense(createExpenseDTO: CreateExpenseDTO, token: string) {
@@ -111,5 +112,22 @@ export class ExpenseService {
     return {
       ExpensesAllTime,
     };
+  }
+  async DeleteById(expenseId: string, token: string) {
+    const payload = await this.authService.ValidateUser({ token });
+    const user = await this.userModel.findById(payload.UserId);
+
+    if (user == null) {
+      throw new NotFoundException('Usuário não encontrado.');
+    }
+
+    const deletedExpense = await this.expenseModel.deleteOne({
+      _id: expenseId,
+    });
+
+    user.Expenses = user.Expenses.filter((x: any) => x != expenseId);
+    user.save();
+
+    return deletedExpense;
   }
 }
