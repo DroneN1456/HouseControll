@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function middleware(request: NextRequest){
     const token = request.cookies.get('token')
 
+    console.log(token)
     const url = request.nextUrl.clone()
     url.pathname = '/auth/login'
     if(!token){
@@ -18,7 +19,9 @@ export async function middleware(request: NextRequest){
         method: "POST",
         body: JSON.stringify({token: token.value})
     })
+    console.log(res)
     const data = await res.json()
+    console.log(data)
     if(data.statusCode){
         return NextResponse.redirect(url)
     }
