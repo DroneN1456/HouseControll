@@ -20,7 +20,8 @@
 
 .sidebarButton{
   position: absolute;
-  top: 46px;
+  top: 16px;
+  font-size: 24px!important;
 }
 
 .sidebarItem:hover{
@@ -46,15 +47,6 @@
   width: 80%;
   height: 3px;
   border-radius: 10px;
-}
-.sidebarButton{
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-top: auto;
-  padding: 20px;
-  font-size: 25px;
-  cursor: pointer;
 }
 .profileName{
   font-size: 32px;
@@ -130,11 +122,11 @@
   background-color: greenyellow!important;
 }
 .owingRowStatus{
-  font-size: 16px;
+  font-size: 20px;
   vertical-align: middle;
   border-radius: 20px!important;
   display: inline-block;
-  width: 10px;
+  width: 100px;
   text-align: center;
 }
 .owingRowStatusPaid{
