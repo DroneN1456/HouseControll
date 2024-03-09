@@ -25,13 +25,14 @@ export class ExpenseService {
   };
 
   async CreateExpense(createExpenseDTO: CreateExpenseDTO, token: string) {
+    console.log(createExpenseDTO);
     const payload = await this.authService.ValidateUser({ token });
 
     const newExpense = new this.expenseModel();
     newExpense.Value = createExpenseDTO.Value;
     newExpense.Type = createExpenseDTO.Type;
 
-    if (newExpense.Title) {
+    if (createExpenseDTO.Title) {
       newExpense.Title = createExpenseDTO.Title;
     } else {
       newExpense.Title = this.TypeTitle[createExpenseDTO.Type];
@@ -54,7 +55,7 @@ export class ExpenseService {
     newExpense.Value = createExpenseDTO.Value;
     newExpense.Type = createExpenseDTO.Type;
 
-    if (newExpense.Title) {
+    if (createExpenseDTO.Title) {
       newExpense.Title = createExpenseDTO.Title;
     } else {
       newExpense.Title = this.TypeTitle[createExpenseDTO.Type];
@@ -80,13 +81,23 @@ export class ExpenseService {
     if (user == null) {
       throw new NotFoundException('Usuário não encontrado.');
     }
-
-    const Expenses = Promise.all(
+    const DeadExpenses = [];
+    let Expenses = await Promise.all(
       user.Expenses.map(async (x) => {
         const expense = await this.expenseModel.findById(x);
+        if (expense == null) {
+          DeadExpenses.push(x);
+        }
         return expense;
       }),
     );
+    if (DeadExpenses.length > 0) {
+      user.Expenses = user.Expenses.filter(
+        (x: any) => !DeadExpenses.includes(x),
+      );
+      user.save();
+      Expenses = Expenses.filter((x) => x != null);
+    }
 
     return Expenses;
   }

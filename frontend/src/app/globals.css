@@ -126,7 +126,6 @@
   vertical-align: middle;
   border-radius: 20px!important;
   display: inline-block;
-  width: 100px;
   text-align: center;
 }
 .owingRowStatusPaid{
@@ -151,5 +150,8 @@
   }
   .owingRowPay{
     height: 70px;
+  }
+  .owingRowStatus{
+    width: 100px;
   }
 }
