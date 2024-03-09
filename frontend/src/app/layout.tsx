@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.min.css'
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
+import ToastClient from "./components/ToastClient";
 
 
 export const metadata: Metadata = {
@@ -19,6 +22,7 @@ export default function RootLayout({
     <html>
       <body>
         {children}
+        <ToastClient/>
     </body>
     </html>
   );

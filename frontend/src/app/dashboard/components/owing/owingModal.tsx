@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { Form, FormLabel, InputGroup, Modal } from "react-bootstrap"
 import { useForm } from "react-hook-form"
+import { toast } from "react-toastify"
 
 export default function OwingModal({owing, PaymentCallback}: {owing: any, PaymentCallback: any}){
     const {register, handleSubmit} = useForm()
@@ -20,11 +21,15 @@ export default function OwingModal({owing, PaymentCallback}: {owing: any, Paymen
 
     async function HandlePayment(data: any){
         const res = await PaymentCallback(data);
-        if(!res.satusCode){
+        console.log(res)
+        if(!res.statusCode){
             HandleClose();
             router.refresh();
-        }
-    }
+            toast('Dívida Paga com Sucesso!', {type: 'success', icon: () => {
+                return <i className="bi bi-cash-coin"/>
+            }
+        })
+    }}
     return (
         <>
             <Modal show={show} onHide={HandleClose}>

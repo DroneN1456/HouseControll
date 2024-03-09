@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function ExpenseEntry({expense, DeleteCallback}: {expense: any, DeleteCallback: any}){
     const router = useRouter();
@@ -9,6 +10,9 @@ export default function ExpenseEntry({expense, DeleteCallback}: {expense: any, D
         const resStatus = await DeleteCallback(expense._id);
         if(resStatus == 200){
             router.refresh();
+            toast('Movimentação Deletada com Sucesso!', {type: 'error', icon: () => {
+                return <i className="bi bi-trash"/>
+            }})
         }
     }
     const format = new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'})

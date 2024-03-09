@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Form, InputGroup, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export default function CreateOwingModal({Creditors, CreateCallback}: {Creditors: any, CreateCallback: any}){
     const [show, setShow] = useState(false);
@@ -23,6 +24,9 @@ export default function CreateOwingModal({Creditors, CreateCallback}: {Creditors
         if(!res.statusCode){
             HandleClose();
             router.refresh();
+            toast('Dívida Criada com Sucesso!', {type: 'success', icon: () => {
+                return <i className="bi bi-wallet2"/>
+            }})
         }
     }
     return (

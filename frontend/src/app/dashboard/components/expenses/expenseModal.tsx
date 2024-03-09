@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button, Form, FormLabel, InputGroup, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export default function ExpenseModal({addOutCallback}: {addOutCallback: any}){
     const router = useRouter()
@@ -37,6 +38,7 @@ export default function ExpenseModal({addOutCallback}: {addOutCallback: any}){
        addOutCallback(entryObject).then(() => {
         handleClose();
         router.refresh();
+        toast('Movimentação Adicionada com Sucesso!', {type: 'success'})
        })
 
     }

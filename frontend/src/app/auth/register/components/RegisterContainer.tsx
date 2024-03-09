@@ -6,25 +6,27 @@ import localFont from 'next/font/local'
 import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
-
+import { toast } from "react-toastify"
 const AileronItalic = localFont({src: "../../../font/Aileron-ThinItalic.otf"})
 
 
 export default function RegisterContainer({RegisterCallback}: {RegisterCallback: any}){
+
     const {register, handleSubmit} = useForm();
     const router = useRouter();
 
     async function HandleRegister(data: any){
         if(data.Name == '' || data.Password == ''){
-            alert("Preencha todos os campos!")
+            toast('Preencha todos os campos!', {type: 'error'})
             return;
         }
         const status = await RegisterCallback(data);
         if(status != 201){
-            alert('Algo deu errado.')
+            toast('Erro ao registrar usuário, Tente novamente mais tarde!', {type: 'error'})
+            return;
         }else{
             router.push('login')
-            alert('Registrado com sucesso!')
+            toast('Usuário registrado com sucesso!', {type: 'success'})
         }
     }
     return (

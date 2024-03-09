@@ -2,8 +2,9 @@ House Controll
 TODO:
 -mudar toda o sistema de responsabilidade do backend, nao é pra ter modulo owing acessando banco de usuarios. [ ]
 -tirar a senha quando de qualquer parte do codigo que retorna usuario. [ ]
--adicionar campo de confirmar senha no registro. [ ]
--adicionar notificações de erro. [ ]
+-adicionar notificações de erro. [X]
 -mudar os metodos diferentes de get e set de cookies que tao aleatorios pelo padrao do next. [ ]
 -implementar logica de pegar gastos apenas do mes. [ ]
--mudar os estilos de global para paginas(profile, owing, expenses, auth). [] 
+-mudar os estilos de global para paginas(profile, owing, expenses, auth). [ ] 
+-adicionar verificaçoes nos formularios. [ ]
+-reformular os dados de registro. [ ]

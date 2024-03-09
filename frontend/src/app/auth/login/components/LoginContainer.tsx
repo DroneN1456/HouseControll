@@ -7,6 +7,7 @@ import Link from "next/link"
 import { useForm } from "react-hook-form"
 import {setCookie} from "nookies"
 import { useRouter } from "next/navigation"
+import { toast } from "react-toastify"
 
 const AileronItalic = localFont({src: "../../../font/Aileron-ThinItalic.otf"})
 
@@ -18,7 +19,7 @@ export default function LoginContainer({loginCallback}: {loginCallback: any}){
     async function handleLogin(data: any){
         const res = await loginCallback(data)
         if(res.statusCode){
-            alert('Usuario invalido!')
+            toast('Usuário ou Senha Inválidos !', {type: 'error'})
             return;
         }
         setCookie(null, 'token', res.token, {
