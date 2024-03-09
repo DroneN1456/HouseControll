@@ -25,7 +25,6 @@ export class ExpenseService {
   };
 
   async CreateExpense(createExpenseDTO: CreateExpenseDTO, token: string) {
-    console.log(createExpenseDTO);
     const payload = await this.authService.ValidateUser({ token });
 
     const newExpense = new this.expenseModel();

@@ -22,7 +22,6 @@ async function GetExpenses(){
         }, 
     });
     const data = await res.json();
-    console.log(data)
     return data;
 }
 async function GetExpensesAllTime(){
