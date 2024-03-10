@@ -7,9 +7,8 @@ import { useForm } from "react-hook-form"
 import { toast } from "react-toastify"
 
 export default function OwingModal({owing, PaymentCallback}: {owing: any, PaymentCallback: any}){
-    const {register, handleSubmit} = useForm()
+    const {register, handleSubmit, formState: {isValid, errors, touchedFields}} = useForm()
     const [show, setShow] = useState(false);
-
     function HandleShow(){
         setShow(true)
     }
@@ -21,7 +20,6 @@ export default function OwingModal({owing, PaymentCallback}: {owing: any, Paymen
 
     async function HandlePayment(data: any){
         const res = await PaymentCallback(data);
-        console.log(res)
         if(!res.statusCode){
             HandleClose();
             router.refresh();
@@ -41,7 +39,25 @@ export default function OwingModal({owing, PaymentCallback}: {owing: any, Paymen
                       <FormLabel htmlFor="Value">Valor</FormLabel>
                       <InputGroup className="mb-3">
                         <InputGroup.Text>R$</InputGroup.Text>
-                        <Form.Control placeholder={owing.Value} type="text" {...register('Value')} id="Value"/>
+                        <Form.Control 
+                        placeholder={owing.Value} 
+                        type="number"
+                        isInvalid={errors.Value != null}
+                        {...register('Value', {
+                            required: {
+                                value: true,
+                                message: 'Valor Obrigatório'
+                            },
+                            min: {
+                                value: 0.01,
+                                message: 'Valor Muito Baixo'
+                            },
+                            max: {
+                                value: owing.PendingValue,
+                                message: 'Valor Muito Alto'
+                            },
+                        })} id="Value"/>
+                        <Form.Control.Feedback type="invalid">{errors.Value?.message?.toString()}</Form.Control.Feedback>
                       </InputGroup>
                 </Modal.Body>
                 <Modal.Footer>

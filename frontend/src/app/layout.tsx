@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.min.css'
-import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
-import ToastClient from "./components/ToastClient";
+import dynamic from "next/dynamic";
+import ToastProvider from "./components/ToastProvider";
+import { Suspense } from "react";
+const ToastClient = dynamic(() => import("./components/ToastProvider"), { ssr: false });
 
 
 export const metadata: Metadata = {
@@ -22,7 +24,6 @@ export default function RootLayout({
     <html>
       <body>
         {children}
-        <ToastClient/>
     </body>
     </html>
   );

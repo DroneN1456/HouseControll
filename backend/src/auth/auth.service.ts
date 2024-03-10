@@ -28,7 +28,7 @@ export class AuthService {
     signInDTO.Password = hashedPassword;
 
     const user = await this.userService.FindUser(
-      signInDTO.Name,
+      signInDTO.Email,
       signInDTO.Password,
     );
 
@@ -43,13 +43,6 @@ export class AuthService {
     };
   }
   async SignUp(createUserDTO: CreateUserDTO) {
-    const hashedPassword = await bcrypt.hash(
-      createUserDTO.Password,
-      process.env.HASH_SALT,
-    );
-
-    createUserDTO.Password = hashedPassword;
-
     return await this.userService.CreateUser(createUserDTO);
   }
   async ValidateUser(validateDTO: ValidateDTO) {

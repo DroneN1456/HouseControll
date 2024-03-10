@@ -8,7 +8,9 @@ import { toast } from "react-toastify";
 export default function CreateOwingModal({Creditors, CreateCallback}: {Creditors: any, CreateCallback: any}){
     const [show, setShow] = useState(false);
 
-    const {register, handleSubmit} = useForm();
+    const {register, handleSubmit, formState: {errors}} = useForm({
+        mode: 'onChange'
+    });
 
     function HandleShow(){
         setShow(true)
@@ -50,7 +52,22 @@ export default function CreateOwingModal({Creditors, CreateCallback}: {Creditors
                 <Form.Label htmlFor="Value">Valor</Form.Label>
                 <InputGroup>
                   <InputGroup.Text>R$</InputGroup.Text>
-                  <Form.Control type="text" placeholder="1000.00" id="Value" {...register('Value')}/>
+                  <Form.Control 
+                  type="number"
+                  isInvalid={errors.Value != null}
+                  placeholder="1000.00" 
+                  id="Value" 
+                  {...register('Value', {
+                    required:{
+                        value: true,
+                        message: 'Valor Obrigatório'
+                    },
+                    min: {
+                        value: 0.01,
+                        message: 'Digite um Valor Válido'
+                    }
+                  })}/>
+                  <Form.Control.Feedback type="invalid">{errors.Value?.message?.toString()}</Form.Control.Feedback>
                 </InputGroup>
               </Modal.Body>
               <Modal.Footer>

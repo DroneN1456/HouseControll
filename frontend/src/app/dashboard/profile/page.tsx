@@ -1,6 +1,5 @@
 import localFont from 'next/font/local'
 import ProfileCell from '../components/profile/profileCell'
-import { parseCookies } from 'nookies'
 import { cookies } from 'next/headers'
 import { Metadata } from 'next'
 

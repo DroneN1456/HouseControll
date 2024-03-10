@@ -12,6 +12,7 @@ import { Expense } from 'src/expense/expense.schema';
 import { CreateUserDTO } from './user.dto';
 import { AuthService } from 'src/auth/auth.service';
 import { OwingService } from 'src/owing/owing.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -24,22 +25,46 @@ export class UserService {
 
   async CreateUser(createUserDTO: CreateUserDTO) {
     const existentUser = await this.userModel.findOne({
-      Name: createUserDTO.Name,
+      Name: createUserDTO.Email,
     });
 
     if (existentUser != null) {
       throw new BadRequestException('Usuario já existe.');
     }
+    if (
+      !createUserDTO.Email ||
+      !createUserDTO.Name ||
+      !createUserDTO.Password
+    ) {
+      throw new BadRequestException('All fields must have values');
+    }
+    //verification
+    if (createUserDTO.Name.length < 3 || createUserDTO.Name.length > 40) {
+      throw new BadRequestException('Name is too short or too long.');
+    }
+    if (
+      createUserDTO.Password.length < 6 ||
+      createUserDTO.Password.length > 40
+    ) {
+      throw new BadRequestException('Password is too short or too long.');
+    }
+    if (createUserDTO.Email.length < 10 || createUserDTO.Email.length > 40) {
+      throw new BadRequestException('Email is too short or too long.');
+    }
     const newUser = new this.userModel(createUserDTO);
+    newUser.Password = await bcrypt.hash(
+      createUserDTO.Password,
+      process.env.HASH_SALT,
+    );
 
     newUser.save();
 
-    return newUser;
+    return { Email: newUser.Email, Name: newUser.Name, UserId: newUser.id };
   }
 
-  async FindUser(Name, Password) {
+  async FindUser(Email, Password) {
     const user = await this.userModel.findOne({
-      Name: Name,
+      Email: Email,
       Password: Password,
     });
     if (user == null) {

@@ -5,8 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.min.css'
 import localFont from 'next/font/local'
 import SidebarItem from "./components/sidebarItem";
-import {parseCookies} from 'nookies'
 import MobileSidebar from "./components/mobileSidebar";
+import ToastProvider from "../components/ToastProvider";
 
 
 export const metadata: Metadata = {
@@ -45,6 +45,7 @@ export default function RootLayout({
         </div>
       </div>
     </main>
+    <ToastProvider/>
     </body>
     </html>
   );

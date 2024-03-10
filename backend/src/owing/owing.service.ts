@@ -50,6 +50,9 @@ export class OwingService {
     if (owing.Status != 0) {
       throw new BadRequestException('Deveção ja foi paga.');
     }
+    if (payOwingDTO.Value <= 0 || payOwingDTO.Value > owing.PendingValue) {
+      throw new BadRequestException('Valor inválido.');
+    }
 
     const Debtor = await this.userModel.findById(owing.Debtor);
     const Creditor = await this.userModel.findById(owing.Creditor);

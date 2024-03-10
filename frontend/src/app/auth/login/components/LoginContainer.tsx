@@ -8,12 +8,16 @@ import { useForm } from "react-hook-form"
 import {setCookie} from "nookies"
 import { useRouter } from "next/navigation"
 import { toast } from "react-toastify"
+import { useState } from "react"
 
 const AileronItalic = localFont({src: "../../../font/Aileron-ThinItalic.otf"})
 
 export default function LoginContainer({loginCallback}: {loginCallback: any}){
 
-    const {register, handleSubmit} = useForm();
+    const {register, watch, handleSubmit, formState: {isValid, errors, touchedFields}} = useForm({
+        mode: 'onChange'
+    });
+    const email = watch('Email')
     const router = useRouter();
 
     async function handleLogin(data: any){
@@ -31,21 +35,40 @@ export default function LoginContainer({loginCallback}: {loginCallback: any}){
 
     return (
         <div className={style.LoginContainer}>
-            <Form onSubmit={handleSubmit(handleLogin)}>
+            <Form onSubmit={handleSubmit(handleLogin)} noValidate validated={isValid}>
                 <h1 className={AileronItalic.className + " p-1"}>House Controll</h1>
                 <Form.Group>
-                    <Form.Label>Nome</Form.Label>
-                    <Form.Control type="text" placeholder="Nome"  {...register('Name')}/>
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                     isValid={errors.Email == null && touchedFields.Email}
+                     isInvalid={errors.Email != null}
+                     type="text"
+                     placeholder="john@email.com"  
+                     {...register('Email', {
+                        required: true,
+                        minLength: 5,
+                        maxLength: 40,
+                        pattern:/^\S+@\S+\.\S+$/,
+                     })}/>
                 </Form.Group>
                 <Form.Group className="mt-3">
                     <Form.Label>Senha</Form.Label>
-                    <Form.Control type="password" placeholder="Senha" {...register('Password')}/>
+                    <Form.Control
+                     type="password"
+                     isValid={errors.Password == null && touchedFields.Password}
+                     isInvalid={errors.Password != null}
+                     placeholder="Senha"  
+                     {...register('Password', {
+                        required: true,
+                        minLength: 5,
+                        maxLength: 40,
+                     })}/>
                 </Form.Group>
                 <Button className="mt-3" style={{width: '100%'}} type="submit">
                     Entrar
                 </Button>
                 <div className="d-flex justify-content-center align-items-center mt-3">
-                  <Link href="register">Registre-se</Link>
+                  <Link href="register">Registrar</Link>
                 </div>
             </Form>
         </div>

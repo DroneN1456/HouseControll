@@ -56,7 +56,7 @@ export default function ExpenseModal({addOutCallback}: {addOutCallback: any}){
                  <FormLabel htmlFor="entryValue">Valor</FormLabel>
                  <InputGroup className="mb-3">
                    <InputGroup.Text>R$</InputGroup.Text>
-                   <Form.Control placeholder="1000,00" type="text" {...register('amount')} id="entryValue"/>
+                   <Form.Control placeholder="1000.00" type="number" {...register('amount')} id="entryValue"/>
                  </InputGroup>
 
                  <FormLabel htmlFor="entryType">Tipo</FormLabel>
