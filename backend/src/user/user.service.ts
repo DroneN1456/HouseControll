@@ -75,6 +75,9 @@ export class UserService {
       UserId: user.id,
     };
   }
+  async GetById(UserId: string) {
+    return await this.userModel.findById(UserId);
+  }
 
   async GetProfile(token: string) {
     const payload = await this.AuthService.ValidateUser({ token: token });
@@ -140,5 +143,11 @@ export class UserService {
       return user;
     });
     return usersNoPassword;
+  }
+  async GetHouses(token: string) {
+    const payload = await this.AuthService.ValidateUser({ token: token });
+    const user = await this.userModel.findById(payload.UserId);
+    const houses = await user.Houses;
+    return houses;
   }
 }

@@ -11,6 +11,8 @@ import { OwingService } from './owing/owing.service';
 import { OwingModule } from './owing/owing.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { HouseModule } from './house/house.module';
+import { InviteModule } from './invite/invite.module';
 
 @Module({
   imports: [
@@ -19,7 +21,7 @@ import { ConfigModule } from '@nestjs/config';
     UserModule, 
     ExpenseModule, 
     OwingModule, 
-    AuthModule],
+    AuthModule, HouseModule, InviteModule],
   controllers: [AppController],
   providers: [AppService],
 })

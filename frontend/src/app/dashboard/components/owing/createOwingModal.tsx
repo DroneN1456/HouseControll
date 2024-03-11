@@ -37,7 +37,7 @@ export default function CreateOwingModal({Creditors, CreateCallback}: {Creditors
             <Modal.Header>
                 Criar Divida
             </Modal.Header>
-            <Form onSubmit={handleSubmit(HandleCreate)}>
+            <Form onSubmit={handleSubmit(HandleCreate)} noValidate>
               <Modal.Body>
               <Form.Label htmlFor="Creditor">Credor</Form.Label>
                 <InputGroup className="mb-3">

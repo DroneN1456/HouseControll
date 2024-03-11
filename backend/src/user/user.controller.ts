@@ -18,6 +18,10 @@ export class UserController {
   ): Promise<User> {
     return this.userService.GetExpensesThisMonth(params.id, token);
   }
+  @Get('houses')
+  async GetHouses(@Headers('token') token) {
+    return this.userService.GetHouses(token);
+  }
   @Get('profile')
   async GetProfile(@Headers('token') token) {
     return this.userService.GetProfile(token);

@@ -34,7 +34,7 @@ export default function OwingModal({owing, PaymentCallback}: {owing: any, Paymen
                 <Modal.Header>
                     Pagar Divida
                 </Modal.Header>
-                <Form onSubmit={handleSubmit(HandlePayment)}>
+                <Form onSubmit={handleSubmit(HandlePayment)} noValidate>
                 <Modal.Body>
                       <FormLabel htmlFor="Value">Valor</FormLabel>
                       <InputGroup className="mb-3">

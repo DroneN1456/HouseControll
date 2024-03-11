@@ -35,6 +35,7 @@ export default function RootLayout({
         <SidebarItem title="Perfil" url="/profile"/>
         <SidebarItem title="Movimentações" url="/expenses"/>
         <SidebarItem title="Dívidas" url="/owing" />
+        <SidebarItem title="Houses" url="/houses"/>
       </div>
       <div className="d-flex flex-column col-12 col-md-10 container-fluid p-3" style={{height: '100vh', padding: "0", margin: "0"}}>
         <div className={AileronItalic.className + " d-flex align-items-center justify-content-center title w-100"} style={{height: '100px'}}>
