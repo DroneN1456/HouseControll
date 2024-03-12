@@ -24,7 +24,7 @@ export class InviteService {
     const user = await this.userService.GetById(payload.UserId);
 
     const house = await this.houseService.GetById(createInviteDTO.HouseId);
-    if(user == null){
+    if (user == null) {
       throw new NotFoundException('Serio?');
     }
     if (house.OwnerId != user._id.toString()) {
@@ -42,5 +42,27 @@ export class InviteService {
       throw new NotFoundException('Convite Inválido.');
     }
     return this.houseService.EnterHouse(invite.HouseId, token);
+  }
+  async GetInvite(houseId: string, token: string) {
+    const user = await this.authService.ValidateUser({ token });
+
+    const house = await this.houseService.GetById(houseId);
+
+    if (house.OwnerId != user.UserId) {
+      throw new BadRequestException();
+    }
+
+    if (house == null) {
+      throw new BadRequestException();
+    }
+
+    const invite = await this.inviteModel.findOne({ HouseId: houseId });
+
+    if (invite == null) {
+      const newInvite = this.CreateInvite(new CreateInviteDTO(houseId), token);
+      return newInvite;
+    } else {
+      return invite;
+    }
   }
 }

@@ -6,11 +6,15 @@ import { UserService } from './user.service';
 import { Expense, ExpenseSchema } from 'src/expense/expense.schema';
 import { AuthModule } from 'src/auth/auth.module';
 import { OwingModule } from 'src/owing/owing.module';
+import { House, HouseSchema } from 'src/house/house.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    MongooseModule.forFeature([{ name: Expense.name, schema: ExpenseSchema }]),
+    MongooseModule.forFeature([
+      { name: User.name, schema: UserSchema },
+      { name: Expense.name, schema: ExpenseSchema },
+      { name: House.name, schema: HouseSchema },
+    ]),
     forwardRef(() => AuthModule),
     OwingModule,
   ],

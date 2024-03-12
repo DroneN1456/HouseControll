@@ -13,12 +13,15 @@ import { CreateUserDTO } from './user.dto';
 import { AuthService } from 'src/auth/auth.service';
 import { OwingService } from 'src/owing/owing.service';
 import * as bcrypt from 'bcrypt';
+import { House } from 'src/house/house.schema';
+import { filter } from 'rxjs';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     @InjectModel(Expense.name) private expenseModel: Model<Expense>,
+    @InjectModel(House.name) private houseModel: Model<House>,
     @Inject(forwardRef(() => AuthService)) private AuthService: AuthService,
     private owingService: OwingService,
   ) {}
@@ -135,10 +138,21 @@ export class UserService {
   }
   async GetAllExceptMe(token: string) {
     const payload = await this.AuthService.ValidateUser({ token: token });
+    const user = await this.userModel.findById(payload.UserId);
+    const userHouses = await this.houseModel.find({
+      Members: { $in: [user._id] },
+    });
     const users = await this.userModel.find({
       _id: { $ne: payload.UserId },
     });
-    const usersNoPassword = users.map((user: any) => {
+    const knownUsers = users.filter((user: any) => {
+      return (
+        userHouses.find((house: any) => {
+          return house.Members.includes(user._id);
+        }) != null
+      );
+    });
+    const usersNoPassword = knownUsers.map((user: any) => {
       user.Password = '';
       return user;
     });

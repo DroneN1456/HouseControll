@@ -1,4 +1,4 @@
-import { Body, Controller, Headers, Post } from '@nestjs/common';
+import { Body, Controller, Get, Headers, Param, Post } from '@nestjs/common';
 import { InviteService } from './invite.service';
 import { CreateInviteDTO } from './createInvite.DTO';
 
@@ -18,5 +18,12 @@ export class InviteController {
     @Headers('token') token: string,
   ) {
     return this.inviteService.UseInvite(inviteId, token);
+  }
+  @Get(':id')
+  async GetInvite(
+    @Param('id') houseId: string,
+    @Headers('token') token: string,
+  ) {
+    return this.inviteService.GetInvite(houseId, token);
   }
 }

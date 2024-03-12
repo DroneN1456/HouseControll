@@ -1,17 +1,23 @@
 'use client'
 import { Card, ListGroup } from "react-bootstrap"
 import localFont from "next/font/local"
+import HouseInfo from "./houseInfo"
 
 const AileronItalic = localFont({src: "../../../font/Aileron-ThinItalic.otf"})
 const AileronLight = localFont({src: "../../../font/Aileron-UltraLight.otf"})
 
-export default function HouseCard({house}: {house: any}){
+export default function HouseCard({house, getHouseInfo}: {house: any, getHouseInfo: any}){
+    async function HandleGetInfo(){
+        const res = await getHouseInfo(house.Id)
+        return res;
+    }
     const formater = new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'})
     return (
         <div className="col-12 col-sm-6 col-md-4 p-0">
             <Card className="houseCard">
                 <Card.Body>
-                    <Card.Title className={AileronItalic.className + " houseTitle"}>{house.Name}</Card.Title>
+                    <Card.Title className={AileronItalic.className + " houseTitle"}>{house.Name}{house.IsOwner && <HouseInfo getInfoCallback={HandleGetInfo}/>}</Card.Title>
+                    
                     <Card.Text className={AileronLight.className + " houseInfo"}>
                         Membros
                     </Card.Text>

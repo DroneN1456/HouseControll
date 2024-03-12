@@ -49,6 +49,16 @@ async function CreateNewHouse(data: any){
     const resData = res.json()
     return resData;
 }
+async function GetHouseInfo(houseId: string){
+    'use server'
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invite/${houseId}`, {
+        headers: {
+            token: cookies().get('token')?.value ?? '',
+        }
+    })
+    const data = await res.json();
+    return data;
+}
 export default async function Page(){
     const userHouses = await GetHouses();
     const houses = await Promise.all(userHouses.map(async (house: any) => {
@@ -67,7 +77,7 @@ export default async function Page(){
         <div className="container-fluid">
             <div className="row">
                 {houses.map((house: any) => {
-                    return <HouseCard house={house} key={house.Id}/>
+                    return <HouseCard house={house} key={house.Id} getHouseInfo={GetHouseInfo}/>
                 })}
                 <AddHouse enterHouseCallback={EnterNewHouse} newHouseCallback={CreateNewHouse}/>
             </div>

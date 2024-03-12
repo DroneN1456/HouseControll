@@ -39,7 +39,7 @@ export class HouseService {
     if (house == null) {
       throw new NotFoundException('Casa não eocontrada.');
     }
-    if(house.Members.includes(user._id.toString())) {
+    if (house.Members.includes(user._id.toString())) {
       throw new NotFoundException('Você já está nessa casa.');
     }
     user.Houses.push(house._id.toString());
@@ -73,6 +73,7 @@ export class HouseService {
     }
     return {
       Id: house._id.toString(),
+      IsOwner: house.OwnerId == payload.UserId,
       Name: house.Name,
       Members: houseMembers,
       Owing: houseOwing,
