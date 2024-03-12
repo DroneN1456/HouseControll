@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { HouseDTO } from './house.dto';
 import { UserService } from 'src/user/user.service';
 import { AuthService } from 'src/auth/auth.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { House } from './house.schema';
-import { Model } from 'mongoose';
+import { Model, now } from 'mongoose';
 import { OwingService } from 'src/owing/owing.service';
 
 @Injectable()
@@ -37,7 +37,10 @@ export class HouseService {
     const user = await this.userService.GetById(payload.UserId);
     const house = await this.houseModel.findById(houseId);
     if (house == null) {
-      return { error: 'Invalid House.' };
+      throw new NotFoundException('Casa não eocontrada.');
+    }
+    if(house.Members.includes(user._id.toString())) {
+      throw new NotFoundException('Você já está nessa casa.');
     }
     user.Houses.push(house._id.toString());
     user.save();

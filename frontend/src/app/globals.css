@@ -156,7 +156,7 @@
 }
 .houseMembers{
   max-height: 165px!important;
-  overflow: scroll;
+  overflow: auto;
 }
 .houseOwner{
   color: red!important;

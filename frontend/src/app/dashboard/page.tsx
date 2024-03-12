@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import 'bootstrap/dist/css/bootstrap.min.css'
-
+import { cookies } from "next/headers";
 export default function Page() {
   return (
     <main className="container-fluid d-flex flex-row row" style={{height: '100vh', padding: "0", margin: "0"}}>

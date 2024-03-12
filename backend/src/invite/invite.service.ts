@@ -24,6 +24,9 @@ export class InviteService {
     const user = await this.userService.GetById(payload.UserId);
 
     const house = await this.houseService.GetById(createInviteDTO.HouseId);
+    if(user == null){
+      throw new NotFoundException('Serio?');
+    }
     if (house.OwnerId != user._id.toString()) {
       throw new BadRequestException('You are not the owner of this house.');
     }
