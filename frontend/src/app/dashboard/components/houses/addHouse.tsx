@@ -23,6 +23,7 @@ export default function AddHouse({newHouseCallback, enterHouseCallback}: {newHou
     async function HandleHouse(data: any){
         if(newHouse){
             const res = await newHouseCallback(data);
+            console.log(res)
             if(!res.statusCode){
                 setShowModal(false);
                 router.refresh();
@@ -31,7 +32,7 @@ export default function AddHouse({newHouseCallback, enterHouseCallback}: {newHou
                     icon: (<i className="bi bi-check-circle"></i>)
                 })
             }else{
-                toast('Erro ao criar casa', {
+                toast(res.message, {
                     type: 'error',
                     icon: (<i className="bi bi-x-circle"></i>)
                 });

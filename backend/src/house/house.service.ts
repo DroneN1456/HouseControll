@@ -18,6 +18,10 @@ export class HouseService {
   async CreateHouse(houseDTO: HouseDTO, token: string) {
     const payload = await this.authService.ValidateUser({ token });
     const user = await this.userService.GetById(payload.UserId);
+    const userHouses = await this.houseModel.find({ OwnerId: user._id });
+    if (userHouses.length >= 2) {
+      throw new NotFoundException('Maximo de casas criadas atingido.');
+    }
     const newHouse = new this.houseModel();
 
     newHouse.OwnerId = user._id.toString();
@@ -37,7 +41,7 @@ export class HouseService {
     const user = await this.userService.GetById(payload.UserId);
     const house = await this.houseModel.findById(houseId);
     if (house == null) {
-      throw new NotFoundException('Casa não eocontrada.');
+      throw new NotFoundException('Casa não encontrada.');
     }
     if (house.Members.includes(user._id.toString())) {
       throw new NotFoundException('Você já está nessa casa.');
@@ -67,7 +71,7 @@ export class HouseService {
     let houseOwing = 0;
     const userOwings = await this.owingService.FindActiveOwings(payload.UserId);
     for (const owing of userOwings) {
-      if (houseMembers.find((member) => member.Id == owing.Creditor)) {
+      if (houseMembers.find((member) => member.Id == owing.DebtorId)) {
         houseOwing += owing.PendingValue;
       }
     }

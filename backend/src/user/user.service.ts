@@ -106,7 +106,9 @@ export class UserService {
     );
     let owing = 0;
     for (const activeOwing of activeOwings) {
-      owing += activeOwing.PendingValue;
+      if (activeOwing.DebtorId == payload.UserId) {
+        owing += activeOwing.PendingValue;
+      }
     }
     const balanceForecast = expensesThisMonth + gainsThisMonth - owing;
     return {
@@ -136,15 +138,13 @@ export class UserService {
 
     return expensesThisMonth;
   }
-  async GetAllExceptMe(token: string) {
+  async GetKnownUsers(token: string) {
     const payload = await this.AuthService.ValidateUser({ token: token });
     const user = await this.userModel.findById(payload.UserId);
     const userHouses = await this.houseModel.find({
       Members: { $in: [user._id] },
     });
-    const users = await this.userModel.find({
-      _id: { $ne: payload.UserId },
-    });
+    const users = await this.userModel.find();
     const knownUsers = users.filter((user: any) => {
       return (
         userHouses.find((house: any) => {

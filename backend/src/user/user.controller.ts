@@ -26,8 +26,8 @@ export class UserController {
   async GetProfile(@Headers('token') token) {
     return this.userService.GetProfile(token);
   }
-  @Get('allExceptMe')
-  async GetAllExceptMe(@Headers('token') token) {
-    return this.userService.GetAllExceptMe(token);
+  @Get('getKnownUsers')
+  async GetKnownUsers(@Headers('token') token) {
+    return this.userService.GetKnownUsers(token);
   }
 }

@@ -5,7 +5,7 @@ import { Form, InputGroup, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-export default function CreateOwingModal({Creditors, CreateCallback}: {Creditors: any, CreateCallback: any}){
+export default function CreateOwingModal({KnownUsers, CreateCallback}: {KnownUsers: any, CreateCallback: any}){
     const [show, setShow] = useState(false);
 
     const {register, handleSubmit, formState: {errors}} = useForm({
@@ -22,13 +22,25 @@ export default function CreateOwingModal({Creditors, CreateCallback}: {Creditors
     const router = useRouter()
 
     async function HandleCreate(data: any){
+        if(data.Creditor === data.Debtor){
+            toast('Apesar da questão filosofica, não é possível criar uma dívida consigo mesmo', {type: 'error', icon: () => {
+                return <i className="bi bi-x-circle-fill"/>
+            }})
+            return;
+        }
         const res = await CreateCallback(data);
+        console.log(res)
         if(!res.statusCode){
             HandleClose();
             router.refresh();
             toast('Dívida Criada com Sucesso!', {type: 'success', icon: () => {
                 return <i className="bi bi-wallet2"/>
             }})
+        }else{
+            toast('Erro ao criar Dívida', {type: 'error', icon: () => {
+                return <i className="bi bi-x-circle-fill"/>
+            }})
+        
         }
     }
     return (
@@ -42,9 +54,19 @@ export default function CreateOwingModal({Creditors, CreateCallback}: {Creditors
               <Form.Label htmlFor="Creditor">Credor</Form.Label>
                 <InputGroup className="mb-3">
                     <Form.Select {...register('Creditor')} id="Creditor">
-                        {Creditors.map((creditor: any) => {
+                        {KnownUsers.map((knownUser: any) => {
                             return (
-                                <option value={creditor._id} key={creditor._id}>{creditor.Name}</option>
+                                <option value={knownUser._id} key={knownUser._id}>{knownUser.Name}</option>
+                            )
+                        })}
+                    </Form.Select>
+                </InputGroup>
+                <Form.Label htmlFor="Debtor">Devedor</Form.Label>
+                <InputGroup className="mb-3">
+                    <Form.Select {...register('Debtor')} id="Debtor">
+                        {KnownUsers.map((knownUser: any) => {
+                            return (
+                                <option value={knownUser._id} key={knownUser._id}>{knownUser.Name}</option>
                             )
                         })}
                     </Form.Select>

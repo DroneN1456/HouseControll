@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 const AileronLight = localFont({src: "../../../font/Aileron-UltraLight.otf"})
 
 export default function OwingRow({owing} : {owing: any}){
-
+    console.log(owing)
     async function HandlePayment(data: any){
         'use server'
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/owing/payOwing`, {
@@ -29,8 +29,8 @@ export default function OwingRow({owing} : {owing: any}){
     const statusText = owing.Status == 1 ? "Pago" : "Pendente";
     return (
         <tr>
-            <td className={AileronLight.className + " owingRowData"}>{owing.Debtor}</td>
-            <td className={AileronLight.className + " owingRowData"}>{owing.Creditor}</td>
+            <td className={AileronLight.className + " owingRowData"}>{owing.DebtorId}</td>
+            <td className={AileronLight.className + " owingRowData"}>{owing.CreditorId}</td>
             <td className={AileronLight.className + " owingRowData owingRowValue"}>{formater.format(owing.Status == 1 ? owing.Value : owing.PendingValue)}</td>
             <td className={AileronLight.className + " owingRowData"}>
                 <div className={"owingRowStatus p-1 " + (owing.Status == 1 ? "owingRowStatusPaid" : "owingRowStatusPending")}><span className="d-none d-md-block">{statusText}</span></div>

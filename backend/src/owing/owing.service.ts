@@ -6,7 +6,7 @@ import {
 import { CreateOwingDTO } from './owing.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Owing } from './owing.schema';
-import mongoose, { Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { User } from 'src/user/user.schema';
 import { ExpenseService } from 'src/expense/expense.service';
 import { CreateExpenseDTO } from 'src/expense/expense.dto';
@@ -23,25 +23,32 @@ export class OwingService {
   ) {}
 
   async CreateOwing(createOwingDTO: CreateOwingDTO, token: string) {
-    const payload = await this.authService.ValidateUser({ token });
+    await this.authService.ValidateUser({ token });
+    if (createOwingDTO.Creditor == createOwingDTO.Debtor) {
+      throw new BadRequestException('Serio?');
+    }
 
     const newOwing = new this.owingModel();
-    const Debtor = await this.userModel.findById(payload.UserId);
+    console.log(createOwingDTO.Debtor, createOwingDTO.Creditor);
+    const Debtor = await this.userModel.findById(createOwingDTO.Debtor);
     const Creditor = await this.userModel.findById(createOwingDTO.Creditor);
     if (Debtor == null || Creditor == null) {
       throw new NotFoundException('Debtor não encontrado.');
     }
-    newOwing.Debtor = Debtor;
-    newOwing.Creditor = Creditor;
+    newOwing.DebtorId = Debtor._id.toString();
+    newOwing.CreditorId = Creditor._id.toString();
     newOwing.Value = createOwingDTO.Value;
     newOwing.PendingValue = createOwingDTO.Value;
     newOwing.Status = 0;
 
     newOwing.save();
+    console.log(newOwing);
     return newOwing;
   }
 
   async PayOwing(payOwingDTO: PayOwingDTO, token: string) {
+    const payload = await this.authService.ValidateUser({ token });
+
     const owing = await this.owingModel.findById(payOwingDTO.OwingId);
     if (owing == null) {
       throw new NotFoundException('Deveção não encontrada.');
@@ -54,16 +61,22 @@ export class OwingService {
       throw new BadRequestException('Valor inválido.');
     }
 
-    const Debtor = await this.userModel.findById(owing.Debtor);
-    const Creditor = await this.userModel.findById(owing.Creditor);
+    const Debtor = await this.userModel.findById(owing.DebtorId);
+    const Creditor = await this.userModel.findById(owing.CreditorId);
 
     if (Debtor == null || Creditor == null) {
       throw new BadRequestException();
     }
 
-    this.expenseService.CreateExpense(
+    if (Creditor.id == payload.UserId) {
+      throw new BadRequestException(
+        'Você não pode pagar uma dívida para você mesmo.',
+      );
+    }
+
+    this.expenseService.CreateExpenseById(
       new CreateExpenseDTO(-payOwingDTO.Value, 'owing', Creditor.Name),
-      token,
+      Debtor.id,
     );
     this.expenseService.CreateExpenseById(
       new CreateExpenseDTO(payOwingDTO.Value, 'owing', Debtor.Name),
@@ -82,9 +95,14 @@ export class OwingService {
 
     return owing;
   }
-  async FindActiveOwings(DebtorId: string) {
+  async FindActiveOwings(UserId: string) {
     const owings = await this.owingModel.find({
-      Debtor: new mongoose.Types.ObjectId(DebtorId),
+      $or: [
+        {
+          DebtorId: UserId,
+          CreditorId: UserId,
+        },
+      ],
       Status: 0,
     });
     return owings;
@@ -92,17 +110,18 @@ export class OwingService {
   async GetOwings(token: string) {
     const payload = await this.authService.ValidateUser({ token });
     const owings = await this.owingModel.find({
-      Debtor: new mongoose.Types.ObjectId(payload.UserId),
+      DebtorId: payload.UserId,
     });
     await Promise.all(
       owings.map(async (owing: any) => {
-        const debtor = await this.userModel.findById(owing.Debtor);
-        const creditor = await this.userModel.findById(owing.Creditor);
-        owing.Debtor = debtor.Name;
-        owing.Creditor = creditor.Name;
+        const debtor = await this.userModel.findById(owing.DebtorId);
+        const creditor = await this.userModel.findById(owing.CreditorId);
+        owing.DebtorId = debtor.Name;
+        owing.CreditorId = creditor.Name;
         return owing;
       }),
     );
+    console.log(owings);
     return owings;
   }
 }

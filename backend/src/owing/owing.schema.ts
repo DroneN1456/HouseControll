@@ -1,19 +1,20 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
-import { User } from 'src/user/user.schema';
+import { HydratedDocument } from 'mongoose';
 
 export type OwingDocument = HydratedDocument<Owing>;
 @Schema()
 export class Owing {
-  @Prop({ type: mongoose.Types.ObjectId, ref: 'User' })
-  Debtor: User;
-  @Prop({ type: mongoose.Types.ObjectId, ref: 'User' })
-  Creditor: User;
+  @Prop()
+  DebtorId: string;
+  @Prop()
+  CreditorId: string;
   @Prop()
   Value: number;
   @Prop()
   PendingValue: number;
   @Prop()
   Status: number;
+
+  IsDebtor?: boolean;
 }
 export const OwingSchema = SchemaFactory.createForClass(Owing);

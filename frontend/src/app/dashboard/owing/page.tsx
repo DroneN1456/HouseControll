@@ -23,9 +23,10 @@ async function GetOwings(){
     return data;
 }
 
-async function GetCreditors(){
+async function GetKnownUsers(){
+    'use server'
     const token = cookies().get("token");
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/allExceptMe`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/getKnownUsers`, {
         next: {
             revalidate: 0
         },
@@ -51,6 +52,7 @@ async function HandleCreate(data: any){
             token: cookies().get("token")?.value ?? ""
         },
         body: JSON.stringify({
+            Debtor: data.Debtor,
             Creditor: data.Creditor,
             Value: data.Value
         })
@@ -61,7 +63,7 @@ async function HandleCreate(data: any){
 
 export default async function Page(){
     const owings = await GetOwings();
-    const creditors = await GetCreditors();
+    const knownUsers = await GetKnownUsers();
     return (
         <div>
             <table className="table">
@@ -82,7 +84,7 @@ export default async function Page(){
                     })}
                     <tr>
                         <td colSpan={5}>
-                            <CreateOwingModal Creditors={creditors} CreateCallback={HandleCreate}/>
+                            <CreateOwingModal KnownUsers={knownUsers} CreateCallback={HandleCreate}/>
                         </td>
                     </tr>
                 </tbody>
