@@ -29,7 +29,7 @@ export class UserService {
 
   async CreateUser(createUserDTO: CreateUserDTO) {
     const existentUser = await this.userModel.findOne({
-      Name: createUserDTO.Email,
+      Email: createUserDTO.Email,
     });
 
     if (existentUser != null) {
@@ -77,9 +77,6 @@ export class UserService {
       Email: Email,
       Password: Password,
     });
-    if (user == null) {
-      throw new BadRequestException('Usuário não encontrado.');
-    }
     return {
       Name: user.Name,
       IsActivated: user.IsActivated,

@@ -33,7 +33,7 @@ export class AuthService {
       signInDTO.Password,
     );
 
-    if (user == null) {
+    if (!user.UserId) {
       throw new UnauthorizedException('Senha ou Usuário incorretos.');
     }
     if (!user.IsActivated) {
