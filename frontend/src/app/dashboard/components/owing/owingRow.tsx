@@ -5,7 +5,6 @@ import { cookies } from "next/headers";
 const AileronLight = localFont({src: "../../../font/Aileron-UltraLight.otf"})
 
 export default function OwingRow({owing} : {owing: any}){
-    console.log(owing)
     async function HandlePayment(data: any){
         'use server'
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/owing/payOwing`, {

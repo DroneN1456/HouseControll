@@ -61,11 +61,10 @@ export class UserService {
       createUserDTO.Password,
       process.env.HASH_SALT,
     );
-    console.log(newUser);
     newUser.save();
     this.mailService.SendMail(
       'Ative sua conta',
-      `Clique no link para ativar sua conta: http://${process.env.API_URL}/user/${newUser._id}/activate/'`,
+      `Clique no link para ativar sua conta: http://${process.env.API_URL}/user/${newUser._id}/activate/`,
       newUser.Email,
     );
 

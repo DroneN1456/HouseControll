@@ -29,7 +29,6 @@ export default function CreateOwingModal({KnownUsers, CreateCallback}: {KnownUse
             return;
         }
         const res = await CreateCallback(data);
-        console.log(res)
         if(!res.statusCode){
             HandleClose();
             router.refresh();

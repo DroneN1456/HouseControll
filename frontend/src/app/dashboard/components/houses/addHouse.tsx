@@ -23,7 +23,6 @@ export default function AddHouse({newHouseCallback, enterHouseCallback}: {newHou
     async function HandleHouse(data: any){
         if(newHouse){
             const res = await newHouseCallback(data);
-            console.log(res)
             if(!res.statusCode){
                 setShowModal(false);
                 router.refresh();

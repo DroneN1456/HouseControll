@@ -29,7 +29,6 @@ export class OwingService {
     }
 
     const newOwing = new this.owingModel();
-    console.log(createOwingDTO.Debtor, createOwingDTO.Creditor);
     const Debtor = await this.userModel.findById(createOwingDTO.Debtor);
     const Creditor = await this.userModel.findById(createOwingDTO.Creditor);
     if (Debtor == null || Creditor == null) {
@@ -42,7 +41,6 @@ export class OwingService {
     newOwing.Status = 0;
 
     newOwing.save();
-    console.log(newOwing);
     return newOwing;
   }
 
