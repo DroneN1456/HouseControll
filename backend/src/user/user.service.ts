@@ -15,6 +15,7 @@ import { OwingService } from 'src/owing/owing.service';
 import * as bcrypt from 'bcrypt';
 import { House } from 'src/house/house.schema';
 import { filter } from 'rxjs';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class UserService {
@@ -24,6 +25,7 @@ export class UserService {
     @InjectModel(House.name) private houseModel: Model<House>,
     @Inject(forwardRef(() => AuthService)) private AuthService: AuthService,
     private owingService: OwingService,
+    private mailService: MailService,
   ) {}
 
   async CreateUser(createUserDTO: CreateUserDTO) {
@@ -55,12 +57,18 @@ export class UserService {
       throw new BadRequestException('Email is too short or too long.');
     }
     const newUser = new this.userModel(createUserDTO);
+    newUser.IsActivated = false;
     newUser.Password = await bcrypt.hash(
       createUserDTO.Password,
       process.env.HASH_SALT,
     );
 
     newUser.save();
+    this.mailService.SendMail(
+      newUser.Email,
+      'Ative sua conta',
+      `Clique no link para ativar sua conta: http://${process.env.API_URL}/user/${newUser._id}/activate/'`,
+    );
 
     return { Email: newUser.Email, Name: newUser.Name, UserId: newUser.id };
   }
@@ -75,6 +83,7 @@ export class UserService {
     }
     return {
       Name: user.Name,
+      IsActivated: user.IsActivated,
       UserId: user.id,
     };
   }
@@ -137,6 +146,11 @@ export class UserService {
     }
 
     return expensesThisMonth;
+  }
+  async ActivateUser(UserId: string) {
+    const user = await this.userModel.findById(UserId);
+    user.IsActivated = true;
+    user.save();
   }
   async GetKnownUsers(token: string) {
     const payload = await this.AuthService.ValidateUser({ token: token });

@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Inject,
   Injectable,
   UnauthorizedException,
@@ -34,6 +35,9 @@ export class AuthService {
 
     if (user == null) {
       throw new UnauthorizedException('senha ou usuário incorretos.');
+    }
+    if (!user.IsActivated) {
+      throw new BadRequestException('Usuário nao ativado.');
     }
 
     const payload = { Name: user.Name, UserId: user.UserId };

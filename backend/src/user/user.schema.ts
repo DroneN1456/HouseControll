@@ -20,6 +20,9 @@ export class User {
 
   @Prop([String])
   Houses: string[];
+
+  @Prop()
+  IsActivated: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

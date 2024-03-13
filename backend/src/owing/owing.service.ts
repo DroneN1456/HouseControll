@@ -118,6 +118,7 @@ export class OwingService {
         const creditor = await this.userModel.findById(owing.CreditorId);
         owing.DebtorId = debtor.Name;
         owing.CreditorId = creditor.Name;
+        owing.IsDebtor = debtor.id == payload.UserId;
         return owing;
       }),
     );

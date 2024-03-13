@@ -13,6 +13,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { HouseModule } from './house/house.module';
 import { InviteModule } from './invite/invite.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { InviteModule } from './invite/invite.module';
     UserModule, 
     ExpenseModule, 
     OwingModule, 
-    AuthModule, HouseModule, InviteModule],
+    AuthModule, HouseModule, InviteModule, MailModule],
   controllers: [AppController],
   providers: [AppService],
 })

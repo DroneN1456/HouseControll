@@ -7,6 +7,8 @@ import { Expense, ExpenseSchema } from 'src/expense/expense.schema';
 import { AuthModule } from 'src/auth/auth.module';
 import { OwingModule } from 'src/owing/owing.module';
 import { House, HouseSchema } from 'src/house/house.schema';
+import { MailService } from 'src/mail/mail.service';
+import { MailModule } from 'src/mail/mail.module';
 
 @Module({
   imports: [
@@ -17,6 +19,7 @@ import { House, HouseSchema } from 'src/house/house.schema';
     ]),
     forwardRef(() => AuthModule),
     OwingModule,
+    MailModule,
   ],
   controllers: [UserController],
   providers: [UserService],
