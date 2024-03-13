@@ -110,19 +110,34 @@ export class OwingService {
   async GetOwings(token: string) {
     const payload = await this.authService.ValidateUser({ token });
     const owings = await this.owingModel.find({
-      DebtorId: payload.UserId,
+      $or: [
+        {
+          DebtorId: payload.UserId,
+        },
+        {
+          CreditorId: payload.UserId,
+        },
+      ],
     });
-    await Promise.all(
+    const mappedOwings = await Promise.all(
       owings.map(async (owing: any) => {
         const debtor = await this.userModel.findById(owing.DebtorId);
         const creditor = await this.userModel.findById(owing.CreditorId);
         owing.DebtorId = debtor.Name;
         owing.CreditorId = creditor.Name;
         owing.IsDebtor = debtor.id == payload.UserId;
-        return owing;
+        return {
+          _id: owing._id,
+          DebtorId: debtor.Name,
+          CreditorId: creditor.Name,
+          Value: owing.Value,
+          PendingValue: owing.PendingValue,
+          Status: owing.Status,
+          IsDebtor: debtor.id == payload.UserId,
+        };
       }),
     );
-    console.log(owings);
-    return owings;
+
+    return mappedOwings;
   }
 }

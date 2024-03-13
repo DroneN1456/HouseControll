@@ -77,11 +77,13 @@ export class UserService {
       Email: Email,
       Password: Password,
     });
-    return {
-      Name: user.Name,
-      IsActivated: user.IsActivated,
-      UserId: user.id,
-    };
+    return !user
+      ? null
+      : {
+          Name: user.Name,
+          IsActivated: user.IsActivated,
+          UserId: user._id,
+        };
   }
   async GetById(UserId: string) {
     return await this.userModel.findById(UserId);
