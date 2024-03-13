@@ -145,7 +145,7 @@ export class UserService {
   }
   async ActivateUser(UserId: string) {
     const user = await this.userModel.findById(UserId);
-    user.IsActivated = false;
+    user.IsActivated = true;
     user.save();
     return { url: `${process.env.WEB_URL}/auth/login` };
   }

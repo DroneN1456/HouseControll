@@ -32,7 +32,7 @@ export default function RegisterContainer({RegisterCallback}: {RegisterCallback:
             return;
         }else{
             router.push('login')
-            toast('Usuário registrado, agora você precisa verificar no seu email', {type: 'warning'})
+            toast('Usuário registrado, agora você precisa verificar seu email!', {type: 'warning'})
         }
     }
     return (
