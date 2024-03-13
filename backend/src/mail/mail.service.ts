@@ -21,12 +21,10 @@ export class MailService {
         subject: subject,
         text: text,
       },
-      (err, info) => {
+      (err) => {
         if (err) {
           console.log(err);
           throw new Error('Um erro inesperado ocorreu');
-        } else {
-          console.log(info);
         }
       },
     );

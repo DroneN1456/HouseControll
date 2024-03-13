@@ -14,7 +14,6 @@ import { AuthService } from 'src/auth/auth.service';
 import { OwingService } from 'src/owing/owing.service';
 import * as bcrypt from 'bcrypt';
 import { House } from 'src/house/house.schema';
-import { filter } from 'rxjs';
 import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
@@ -62,12 +61,12 @@ export class UserService {
       createUserDTO.Password,
       process.env.HASH_SALT,
     );
-
+    console.log(newUser);
     newUser.save();
     this.mailService.SendMail(
-      newUser.Email,
       'Ative sua conta',
       `Clique no link para ativar sua conta: http://${process.env.API_URL}/user/${newUser._id}/activate/'`,
+      newUser.Email,
     );
 
     return { Email: newUser.Email, Name: newUser.Name, UserId: newUser.id };
@@ -149,8 +148,9 @@ export class UserService {
   }
   async ActivateUser(UserId: string) {
     const user = await this.userModel.findById(UserId);
-    user.IsActivated = true;
+    user.IsActivated = false;
     user.save();
+    return { url: `${process.env.WEB_URL}/auth/login` };
   }
   async GetKnownUsers(token: string) {
     const payload = await this.AuthService.ValidateUser({ token: token });

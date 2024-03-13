@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Headers, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Headers,
+  Param,
+  Post,
+  Redirect,
+  Res,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.schema';
 import { CreateUserDTO } from './user.dto';
@@ -19,6 +28,7 @@ export class UserController {
     return this.userService.GetExpensesThisMonth(params.id, token);
   }
   @Get(':id/activate')
+  @Redirect()
   async ActivateUser(@Param('id') userId) {
     return this.userService.ActivateUser(userId);
   }

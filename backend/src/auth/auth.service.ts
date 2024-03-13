@@ -34,10 +34,12 @@ export class AuthService {
     );
 
     if (user == null) {
-      throw new UnauthorizedException('senha ou usuário incorretos.');
+      throw new UnauthorizedException('Senha ou Usuário incorretos.');
     }
     if (!user.IsActivated) {
-      throw new BadRequestException('Usuário nao ativado.');
+      throw new BadRequestException(
+        'Usuário não ativado, por favor cheque seu email.',
+      );
     }
 
     const payload = { Name: user.Name, UserId: user.UserId };

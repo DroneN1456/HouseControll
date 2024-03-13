@@ -23,7 +23,7 @@ export default function LoginContainer({loginCallback}: {loginCallback: any}){
     async function handleLogin(data: any){
         const res = await loginCallback(data)
         if(res.statusCode){
-            toast('Usuário ou Senha Inválidos !', {type: 'error'})
+            toast(res.message, {type: 'error'})
             return;
         }
         setCookie(null, 'token', res.token, {

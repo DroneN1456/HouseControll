@@ -22,17 +22,17 @@ export default function RegisterContainer({RegisterCallback}: {RegisterCallback:
     const password = watch('Password')
 
     async function HandleRegister(data: any){
-        const status = await RegisterCallback({
+        const res = await RegisterCallback({
             Email: data.Email,
             Name: data.Name,
             Password: data.Password
         });
-        if(status != 201){
-            toast('Erro ao registrar usuário, Tente novamente mais tarde!', {type: 'error'})
+        if(res.statusCode){
+            toast(res.message, {type: 'error'})
             return;
         }else{
             router.push('login')
-            toast('Usuário registrado com sucesso!', {type: 'success'})
+            toast('Usuário registrado, agora você precisa verificar no seu email', {type: 'warning'})
         }
     }
     return (

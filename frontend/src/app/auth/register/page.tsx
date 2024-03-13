@@ -17,7 +17,8 @@ export default function Page(){
             body: JSON.stringify(data),
             method: 'POST'
         })
-        return res.status;
+        const resData = await res.json()
+        return resData;
 
     }
     return (
